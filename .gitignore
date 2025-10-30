@@ -1,0 +1,4 @@
+.idea
+.vite
+build/
+node_modules/
