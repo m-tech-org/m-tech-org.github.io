@@ -6,6 +6,7 @@ const GlobalConstants = {
     COMPANY_NAME: 'M-Tech',
     COMPANY_MOTTO: 'Engineering Tomorrow. Automating Today.',
     MAIL_ID: 'mailto:mtechltd2021@gmail.com',
+    GITHUB_REPO_NAME: 'm-tech-org.github.io',
 }
 
 export default GlobalConstants
