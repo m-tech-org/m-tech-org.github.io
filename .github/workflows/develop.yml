@@ -1,45 +1,14 @@
-name: Deploy to GitHub Pages
+name: Deploy Portfolio to GitHub Pages
 
-on:
-  # Triggers the workflow on pushes to the main branch
-  push:
-    branches:
-      - develop
-  # Allows you to manually run the workflow from the Actions tab
-  workflow_dispatch:
+uses: bitovi/github-actions-react-to-github-pages@v1.2.4
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    # Define permissions needed for the action to write to the repository
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Project (Vite)
-        run: npm run build
-
-      - name: Configure GitHub Pages Deployment
-        uses: actions/configure-pages@v5
-
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './build' # This must match the outDir in vite.config.js
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+with:
+  checkout: # optional, default is true
+  checkout-filter: # optional
+  checkout-sparse-checkout: # optional
+  checkout-sparse-checkout-cone-mode: # optional, default is true
+  path: build
+#  install_command:
+#  build_command:
+#  caching:
+          
