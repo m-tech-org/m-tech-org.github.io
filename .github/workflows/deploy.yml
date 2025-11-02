@@ -69,6 +69,10 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Push Artifact
+        run: npm publish
+#        if: github.event_name == 'push'
+
 #      - name: Upload GitHub Pages artifact
 #        uses: actions/upload-pages-artifact@v4
 #
