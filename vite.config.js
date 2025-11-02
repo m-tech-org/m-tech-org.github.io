@@ -1,12 +1,11 @@
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
-import GlobalConstants from "./src/constants/GlobalConstants.tsx";
 
 export default defineConfig(({mode}) => {
     const env = process.env;
 
     return {
-        base: mode === 'production' ? GlobalConstants.GITHUB_REPO_NAME : '/',
+        base: '/',
 
         build: {
             outDir: "build",
