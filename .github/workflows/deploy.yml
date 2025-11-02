@@ -22,6 +22,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Starting message
+        run: echo Starting build job
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -47,30 +50,30 @@ jobs:
           path: build/
 
   # Deploy job
-  deploy:
-    # Add a dependency to the build job
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Push Artifact
-        run: npm publish
+#  deploy:
+#    # Add a dependency to the build job
+#    needs: build
+#
+#    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+#    permissions:
+#      pages: write      # to deploy to Pages
+#      id-token: write   # to verify the deployment originates from an appropriate source
+#
+#    # Deploy to the github-pages environment
+#    environment:
+#      name: github-pages
+#      url: ${{ steps.deployment.outputs.page_url }}
+#
+#    # Specify runner + deployment step
+#    runs-on: ubuntu-20.04
+#
+#    steps:
+#      - name: Deploy to GitHub Pages
+#        id: deployment
+#        uses: actions/deploy-pages@v4
+#
+#      - name: Push Artifact
+#        run: npm publish
 #        if: github.event_name == 'push'
 
 #      - name: Upload GitHub Pages artifact
