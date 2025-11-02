@@ -22,8 +22,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Starting message
-        run: echo Starting build job
+      - name: Job Starting Message
+        run: echo Starting automation build job
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -72,12 +72,11 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Push Artifact
-        run: npm publish
-#        if: github.event_name == 'push'
-
 #      - name: Upload GitHub Pages artifact
 #        uses: actions/upload-pages-artifact@v4
 #
 #      - name: Configure GitHub Pages
 #        uses: actions/configure-pages@v5
+
+      - name: Complete Job
+        run: echo Job Complete Successfully!
