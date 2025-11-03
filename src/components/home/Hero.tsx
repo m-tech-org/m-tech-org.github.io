@@ -4,19 +4,6 @@ import GlobalConstants from "@constants/GlobalConstants.tsx";
 import Tags from "@components/common/Tags";
 import AnimatedLogo from "@components/common/AnimatedLogo";
 
-// CSS animations in JS
-const styleSheet = document.createElement('style');
-styleSheet.innerText = `
-@keyframes typing {
-from { width: 0 }
-to { width: 100% }
-}
-@keyframes blink {
-0% { border-color: transparent }
-}
-`;
-document.head.appendChild(styleSheet);
-
 const BADGE_TITLE = 'Hybrid • Enterprise • Product';
 const HEADLINE = 'Engineering Your Advantage. Automating Today\'s Workflows and Building enterprise-grade automation & elegant software products';
 
@@ -114,6 +101,7 @@ export default function createHero() {
                 React.createElement('div', {style: {textAlign: 'center', marginTop: 12}},
                     React.createElement(
                         'div', {
+                            className: 'logo-spin',
                             style: {
                                 fontWeight: 700,
                                 color: '#492079',

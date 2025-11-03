@@ -136,7 +136,7 @@ module.exports = {
                     '0 %': {borderColor: 'transparent'}
                 }
             },
-            typewriter: 'typing 3s steps(40, end), blink 0.75s step-end infinite'
+            typewriter: 'typing 3s steps(40, end), blink 0.75s step-end infinite',
             animation: {
                 'pulse-shine': 'pulse-shine 2s infinite ease-in-out',
             },

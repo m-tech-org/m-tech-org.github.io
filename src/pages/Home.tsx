@@ -8,14 +8,7 @@ import createFooter from "@components/common/Footer.tsx";
 
 export default function Home() {
     return React.createElement('div', {
-            style: {
-                padding: "0 1.5%",
-                width: "auto",
-                minHeight: '100vh',
-                background: 'linear-gradient(180deg,#fff,#f3eef8)',
-                color: '#111827',
-                fontFamily: 'Inter, system-ui, sans-serif',
-            }
+            style: {}
         },
         createNav(),
         createHero(),

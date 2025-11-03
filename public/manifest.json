@@ -1,0 +1,23 @@
+{
+  "name": "M-Tech",
+  "short_name": "M-Tech",
+  "description": "M-Tech - Engineering Tomorrow. Automating Today.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#111827",
+  "background_color": "linear-gradient(180deg,#fff,#f3eef8)",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "400x400",
+      "type": "image/svg"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "400x400",
+      "type": "image/ico",
+      "purpose": "maskable"
+    }
+  ]
+}
