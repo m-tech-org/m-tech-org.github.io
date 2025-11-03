@@ -9,6 +9,7 @@ class AnimatedLogo extends React.Component<{ logoSrc: any, logoName: any }> {
                 React.createElement('img', {
                     src: logoSrc,
                     alt: logoName,
+                    className: "logo-spin logo react",
                     style: {
                         height: 120,
                         width: 120,
@@ -16,7 +17,7 @@ class AnimatedLogo extends React.Component<{ logoSrc: any, logoName: any }> {
                         margin: '0 auto',
                         objectFit: 'contain',
                         cursor: 'pointer',
-                        animation: 'pulse-shine',
+                        animation: 'pulse-shine logo-spin',
                     }
                 }))
         );

@@ -1,6 +1,6 @@
 import React from "react";
-import createBadge from "@components/ui/Badge.tsx";
-import GlobalConstants from "@constants/GlobalConstants.tsx";
+import createBadge from "@components/ui/Badge";
+import GlobalConstants from "@constants/GlobalConstants";
 import Tags from "@components/common/Tags";
 import AnimatedLogo from "@components/common/AnimatedLogo";
 

@@ -20,7 +20,8 @@ export default function createNav() {
                         src: GlobalConstants.LOGO_MINI_SRC,
                         alt: GlobalConstants.COMPANY_NAME,
                         href: '/',
-                        style: {height: 80, width: 80, objectFit: 'contain'}
+                        className: "logo react",
+                        style: {objectFit: 'contain'}
                     }
                 )
             ),

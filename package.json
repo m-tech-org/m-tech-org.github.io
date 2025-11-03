@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.10",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.16",
     "dotenv": "^17.2.3",
     "gh-pages": "^6.3.0",
@@ -23,6 +24,7 @@
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.5",
     "tailwind-scrollbar-hide": "^4.0.0",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
