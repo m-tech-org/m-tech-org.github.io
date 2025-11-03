@@ -71,7 +71,16 @@ const cards = cases.map(function (c, idx) {
 
 export default function createWork() {
 
-    return React.createElement('section', {id: 'work', style: {maxWidth: 1024, margin: '48px auto', padding: 8}},
+    return React.createElement('section',
+        {
+            id: 'work',
+            style:
+                {
+                    // maxWidth: 1024,
+                    margin: '48px auto',
+                    padding: 8
+                }
+        },
         React.createElement('h2', {
             style: {
                 fontSize: 24,

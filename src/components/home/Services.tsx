@@ -52,7 +52,14 @@ const gridChildren = services.map(function (s, i) {
 export default function createServices() {
 
 
-    return React.createElement('section', {id: 'services', style: {maxWidth: 1024, margin: '48px auto', padding: 8}},
+    return React.createElement('section', {
+            id: 'services',
+            style: {
+                // maxWidth: 1024,
+                margin: '48px auto',
+                padding: 8
+            }
+        },
         React.createElement('h2', {
             style: {
                 fontSize: 24,

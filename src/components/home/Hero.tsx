@@ -28,7 +28,7 @@ export default function createHero() {
             style: {
                 display: 'flex',
                 flexWrap: 'wrap',
-                maxWidth: 1024,
+                // maxWidth: 1024,
                 margin: '24px auto',
                 gap: 24,
                 alignItems: 'flex-start',

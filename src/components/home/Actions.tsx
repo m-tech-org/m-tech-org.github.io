@@ -1,13 +1,14 @@
 import React from "react";
 
 export default function createCTA() {
+    const env = import.meta.env;
 
     return React.createElement(
         'section',
         {
             style: {
-                maxWidth: 1024,
-                margin: '48px auto',
+                // maxWidth: 1024,
+                margin: '50px auto',
                 padding: 24,
                 borderRadius: 16,
                 background: '#492079',
@@ -32,7 +33,7 @@ export default function createCTA() {
         }, 'Discuss your enterprise automation, SaaS platform, or next product with our expert team.'),
         React.createElement('a',
             {
-                href: 'mailto:mtechltd2021@gmail.com',
+                href: 'mailto:' + env.VITE_CONTACT_EMAIL,
                 style: {
                     backgroundColor: '#1FB6FD',
                     color: '#fff',
