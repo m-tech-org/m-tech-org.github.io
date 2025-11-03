@@ -15,11 +15,10 @@ export default function Home() {
                 background: 'linear-gradient(180deg,#fff,#f3eef8)',
                 color: '#111827',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                // padding: '0 0 24px 0'
             }
         },
         createNav(),
-        // createHero(),
+        createHero(),
         // createServices(),
         // createWork(),
         // createCTA(),
