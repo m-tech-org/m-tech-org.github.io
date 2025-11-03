@@ -110,7 +110,7 @@ export default function createHero() {
                         border: '1px solid rgba(0,0,0,0.05)'
                     }
                 },
-                <AnimatedLogo logoSrc={GlobalConstants.LOGO_MINI_SRC} logoName={GlobalConstants.COMPANY_NAME}/>,
+                <AnimatedLogo logoSrc={GlobalConstants.LOGO_ANIMATED} logoName={GlobalConstants.COMPANY_NAME}/>,
                 React.createElement('div', {style: {textAlign: 'center', marginTop: 12}},
                     React.createElement(
                         'div', {
