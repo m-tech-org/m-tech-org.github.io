@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 # python
-# script to get deployments info
-# gh api   --method GET
-# -H "Accept: application/vnd.github+json"
-# -H "X-GitHub-Api-Version: 2022-11-28"
-# /repos/m-tech-org/m-tech-org.github.io/deployments
-
 import sys
 import json
 import subprocess
@@ -25,14 +19,14 @@ def load_json(path_arg: str):
     except Exception as e:
         raise RuntimeError(f"Failed to read/parse JSON from {path}: {e}")
 
-def extract_items(data):
+def extract_items(data, target_login: str):
     if isinstance(data, list):
         items = data
     elif isinstance(data, dict):
         items = next((v for v in data.values() if isinstance(v, list)), [])
     else:
         items = []
-    return [it for it in items if it.get("creator", {}).get("login") == TARGET_LOGIN and "id" in it]
+    return [it for it in items if it.get("creator", {}).get("login") == target_login and "id" in it]
 
 def delete_deployment(deployment_id: int):
     gh_cmd = [
@@ -50,7 +44,13 @@ def main():
         print("Error: `gh` CLI not found in PATH", file=sys.stderr)
         sys.exit(1)
 
-    path_arg = sys.argv[1] if len(sys.argv) > 1 else None
+    if len(sys.argv) < 2:
+        print(f"Usage: python3 `remove_deployments.py` <login> [json_path]", file=sys.stderr)
+        sys.exit(2)
+
+    target_login = sys.argv[1]
+    path_arg = sys.argv[2] if len(sys.argv) > 2 else None
+
     try:
         data = load_json(path_arg)
     except Exception as e:
@@ -58,9 +58,9 @@ def main():
         append_error(str(e))
         sys.exit(1)
 
-    items = extract_items(data)
+    items = extract_items(data, target_login)
     if not items:
-        print("No matching deployments found for login:", TARGET_LOGIN)
+        print("No matching deployments found for login:", target_login)
         return
 
     deleted = 0
