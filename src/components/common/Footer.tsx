@@ -2,7 +2,7 @@ import GlobalConstants from "../../constants/GlobalConstants.tsx";
 import React from "react";
 
 function footerText() {
-    return '© 2021 - ' + new Date().getFullYear() + ' ' + GlobalConstants.COMPANY_NAME + ' — ' + GlobalConstants.COMPANY_MOTTO
+    return '2021 - ' + new Date().getFullYear() + '©' + GlobalConstants.COMPANY_NAME + ' — ' + GlobalConstants.COMPANY_MOTTO
 }
 
 export default function createFooter() {
@@ -13,7 +13,9 @@ export default function createFooter() {
             textAlign: 'center',
             color: '#6b7280',
             fontSize: 14,
-            padding: '16px 24px'
+            padding: '16px 24px',
+            fontWeight: 'bold',
+            fontStyle: 'italic',
         }
     }, footerText())
 }
