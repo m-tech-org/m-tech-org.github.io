@@ -130,19 +130,11 @@ export default {
                     },
                 },
                 'typing': {
-                    'from': {
-                        width: '0'
+                    '0%': {
+                        width: '0',
                     },
-                    'to': {
-                        width: '100%'
-                    }
-                },
-                'blink': {
-                    '0%, 100%': {
-                        borderColor: 'transparent'
-                    },
-                    '50%': {
-                        borderColor: 'currentColor'
+                    '100%': {
+                        width: '100%',
                     }
                 },
                 'logo-spin': {
@@ -157,7 +149,7 @@ export default {
             animation: {
                 'pulse-shine': 'pulse-shine 2s infinite ease-in-out',
                 'logo-spin': 'logo-spin infinite 20s linear',
-                'typewriter': 'typing 3s steps(40, end), blink 0.75s step-end infinite',
+                'typewriter': 'typing 10s steps(50) infinite',
                 'off': 'none',
             },
         }

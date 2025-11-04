@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import createBadge from "@components/ui/Badge";
 import GlobalConstants from "@constants/GlobalConstants";
 import AnimatedLogo from "@components/common/AnimatedLogo.tsx";
@@ -102,15 +102,25 @@ export default function createHero() {
                     React.createElement(
                         'div', {
                             style: {
-                                fontWeight: 700,
-                                color: '#492079',
-                                fontSize: 17,
-                                fontStyle: 'italic',
-                                overflow: 'hidden',
-                                whiteSpace: 'nowrap',
-                            },
-                            className: 'animate-typewriter',
-                        }, GlobalConstants.COMPANY_MOTTO),
+                                display: 'flex',
+                                justifyContent: 'center',
+                                width: '100%',
+                            }
+                        },
+                        React.createElement(
+                            'div', {
+                                style: {
+                                    fontWeight: 700,
+                                    color: '#492079',
+                                    fontSize: 17,
+                                    fontStyle: 'italic',
+                                    overflow: 'hidden',
+                                    whiteSpace: 'nowrap',
+                                    display: 'inline-block',
+                                },
+                                className: 'animate-typewriter',
+                            }, GlobalConstants.COMPANY_MOTTO)
+                    ),
                     React.createElement('div', {
                         style: {
                             color: '#6b7280',
