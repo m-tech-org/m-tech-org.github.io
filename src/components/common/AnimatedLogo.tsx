@@ -1,9 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
+import GlassModal from "./GlassModal.tsx";
 
 const AnimatedLogo = ({logoSrc, logoName}) => {
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     return React.createElement(React.Fragment, null,
-        React.createElement('a', { /*onClick: handleOpenModal,*/ href: '/'},
+        React.createElement('a', {onClick: handleOpenModal, href: '#contact'},
             React.createElement('img', {
                 src: logoSrc,
                 alt: logoName,
@@ -17,7 +29,12 @@ const AnimatedLogo = ({logoSrc, logoName}) => {
                     objectFit: 'contain',
                     cursor: 'pointer'
                 }
-            }))
+            })),
+
+        <GlassModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+        />
     );
 }
 

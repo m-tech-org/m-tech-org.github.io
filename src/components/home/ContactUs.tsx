@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import GlobalConstants from "../../constants/GlobalConstants.tsx";
 import GlassModal from "../common/GlassModal.tsx";
-
-const COMPANY_DETAILS = {
-    name: GlobalConstants.COMPANY_NAME,
-    address: GlobalConstants.COMPANY_ADDRESS,
-    phone: GlobalConstants.COMPANY_CONTACT_NO,
-    email: GlobalConstants.COMPANY_MAIL_ID,
-};
 
 export default function ContactUsButton() {
 
@@ -53,7 +45,6 @@ export default function ContactUsButton() {
             <GlassModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                companyDetails={COMPANY_DETAILS}
             />
         </>
     );

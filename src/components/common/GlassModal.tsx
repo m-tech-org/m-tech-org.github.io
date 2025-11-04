@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import GlobalConstants from "../../constants/GlobalConstants.tsx";
 
 const defaultStyle = {
     color: '#000000',
@@ -12,10 +13,18 @@ const hoverStyle = {
     fontWeight: 'bold',
 };
 
-const GlassModal = ({isOpen, onClose, companyDetails}) => {
+const COMPANY_DETAILS = {
+    name: GlobalConstants.COMPANY_NAME,
+    address: GlobalConstants.COMPANY_ADDRESS,
+    phone: GlobalConstants.COMPANY_CONTACT_NO,
+    email: GlobalConstants.COMPANY_MAIL_ID,
+};
+
+const GlassModal = ({isOpen, onClose}) => {
     if (!isOpen) return null;
 
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const companyDetails = COMPANY_DETAILS;
 
     const detailItems = [
         ...(companyDetails.name ? [{label: 'Company Name', value: companyDetails.name, type: 'text'}] : []),
