@@ -1,27 +1,24 @@
 import React from "react";
 
-class AnimatedLogo extends React.Component<{ logoSrc: any, logoName: any }> {
-    render() {
-        let {logoSrc, logoName} = this.props;
+const AnimatedLogo = ({logoSrc, logoName}) => {
 
-        return React.createElement(React.Fragment, null,
-            React.createElement('a', { /*onClick: handleOpenModal,*/ href: '#contact'},
-                React.createElement('img', {
-                    src: logoSrc,
-                    alt: logoName,
-                    className: "logo-spin logo react",
-                    style: {
-                        height: 120,
-                        width: 120,
-                        display: 'block',
-                        margin: '0 auto',
-                        objectFit: 'contain',
-                        cursor: 'pointer',
-                        animation: 'pulse-shine logo-spin',
-                    }
-                }))
-        );
-    }
+    return React.createElement(React.Fragment, null,
+        React.createElement('a', { /*onClick: handleOpenModal,*/ href: '/'},
+            React.createElement('img', {
+                src: logoSrc,
+                alt: logoName,
+                className: "logo react animate-pulse-shine",
+                style: {
+                    background: 'transparent',
+                    height: 120,
+                    width: 120,
+                    display: 'block',
+                    margin: '0 auto',
+                    objectFit: 'contain',
+                    cursor: 'pointer'
+                }
+            }))
+    );
 }
 
 

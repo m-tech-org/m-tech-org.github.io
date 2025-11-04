@@ -1,5 +1,9 @@
-module.exports = {
-    content: ["./src/**/*.{js,ts,jsx,tsx,html,mdx}"],
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx,html,mdx}"
+    ],
     darkMode: "class",
     theme: {
         screens: {
@@ -43,7 +47,6 @@ module.exports = {
                     danger: "var(--border-danger)",
                     light: "var(--border-light)"
                 },
-                // Component-specific colors
                 header: {
                     background: "var(--secondary-background)"
                 },
@@ -121,28 +124,45 @@ module.exports = {
                 'pulse-shine': {
                     '0%, 100%': {
                         transform: 'scale(1)',
-                        boxShadow: '0 0 8px rgba(73, 32, 121, 0.5), 0 0 0px transparent'
                     },
                     '50%': {
                         transform: 'scale(1.05)',
-                        boxShadow: '0 0 25px rgba(73, 32, 121, 0.9), 0 0 15px #ffffff'
                     },
                 },
                 'typing': {
-                    'from': {width: 0},
-                    'to': {width: '100 %'}
+                    'from': {
+                        width: '0'
+                    },
+                    'to': {
+                        width: '100%'
+                    }
                 },
                 'blink': {
-                    '0 %': {borderColor: 'transparent'}
-                }
+                    '0%, 100%': {
+                        borderColor: 'transparent'
+                    },
+                    '50%': {
+                        borderColor: 'currentColor'
+                    }
+                },
+                'logo-spin': {
+                    'from': {
+                        transform: 'rotate(0deg)',
+                    },
+                    'to': {
+                        transform: 'rotate(360deg)',
+                    }
+                },
             },
-            typewriter: 'typing 3s steps(40, end), blink 0.75s step-end infinite',
             animation: {
                 'pulse-shine': 'pulse-shine 2s infinite ease-in-out',
+                'logo-spin': 'logo-spin infinite 20s linear',
+                'typewriter': 'typing 3s steps(40, end), blink 0.75s step-end infinite',
+                'off': 'none',
             },
         }
     },
     plugins: [
         require('tailwind-scrollbar-hide')
     ]
-};
+}

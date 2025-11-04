@@ -28,6 +28,7 @@ export default function createNav() {
             React.createElement('div', null,
                 React.createElement('div', {
                     style: {
+                        color: '#492079',
                         fontSize: 16,
                         fontWeight: 700
                     }

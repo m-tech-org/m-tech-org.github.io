@@ -1,8 +1,8 @@
 import React from "react";
 import createBadge from "@components/ui/Badge";
 import GlobalConstants from "@constants/GlobalConstants";
-import Tags from "@components/common/Tags";
-import AnimatedLogo from "@components/common/AnimatedLogo";
+import AnimatedLogo from "@components/common/AnimatedLogo.tsx";
+import Tags from "@components/common/Tags.tsx";
 
 const BADGE_TITLE = 'Hybrid • Enterprise • Product';
 const HEADLINE = 'Engineering Your Advantage. Automating Today\'s Workflows and Building enterprise-grade automation & elegant software products';
@@ -54,7 +54,8 @@ export default function createHero() {
                     fontSize: 36,
                     color: '#492079',
                     marginTop: 18,
-                    lineHeight: 1.1
+                    lineHeight: 1.1,
+                    fontWeight: 'normal'
                 }
             }, HEADLINE),
             React.createElement('p', {
@@ -87,21 +88,19 @@ export default function createHero() {
                 )
             )
         ),
-        React.createElement('div', {style: {flex: '1 1 360px', minWidth: 280}}, // Right sidebar area
+        React.createElement('div', {style: {flex: '1 1 360px', minWidth: 280}},
             React.createElement('div', {
                     style: {
                         borderRadius: 18,
                         padding: 16,
-                        boxShadow: '0 15px 40px rgba(0,0,0,0.1)',
-                        background: '#fff',
                         border: '1px solid rgba(0,0,0,0.05)'
-                    }
+                    },
+                    className: 'bg-white shadow-md p-4 hover:shadow-2xl',
                 },
                 <AnimatedLogo logoSrc={GlobalConstants.LOGO_ANIMATED} logoName={GlobalConstants.COMPANY_NAME}/>,
                 React.createElement('div', {style: {textAlign: 'center', marginTop: 12}},
                     React.createElement(
                         'div', {
-                            className: 'logo-spin',
                             style: {
                                 fontWeight: 700,
                                 color: '#492079',
@@ -109,8 +108,8 @@ export default function createHero() {
                                 fontStyle: 'italic',
                                 overflow: 'hidden',
                                 whiteSpace: 'nowrap',
-                                animation: 'typing 3s steps(40, end), blink 0.75s step-end infinite'
-                            }
+                            },
+                            className: 'animate-typewriter',
                         }, GlobalConstants.COMPANY_MOTTO),
                     React.createElement('div', {
                         style: {

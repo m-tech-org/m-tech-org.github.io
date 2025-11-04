@@ -24,7 +24,12 @@ export default function ContactUsButton() {
 
     return (
         <>
-            {React.createElement('div', {style: {display: 'flex', gap: 12}},
+            {React.createElement('div', {
+                    className: 'animate-pulse-shine shadow-md react hover:animate-off',
+                    style: {
+                        display: 'flex', gap: 12
+                    }
+                },
                 React.createElement('a',
                     {
                         onClick: handleOpenModal,
