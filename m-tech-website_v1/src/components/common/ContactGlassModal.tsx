@@ -20,7 +20,7 @@ const COMPANY_DETAILS = {
     email: GlobalConstants.COMPANY_MAIL_ID,
 };
 
-const GlassModal = ({isOpen, onClose}) => {
+const ContactGlassModal = ({isOpen, onClose}) => {
     if (!isOpen) return null;
 
     const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -131,4 +131,4 @@ const GlassModal = ({isOpen, onClose}) => {
     );
 }
 
-export default GlassModal;
+export default ContactGlassModal;

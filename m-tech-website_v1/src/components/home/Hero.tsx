@@ -25,9 +25,6 @@ const coreValues = [
     {icon: '🔒', text: 'Security Hardening: Zero-trust architecture and robust data protection.'},
     {icon: '🚀', text: 'Scalability First: Designing systems for 10x growth from day one.'},
     {icon: '🛠️', text: 'DevOps Excellence: Seamless CI/CD pipelines and infrastructure as code.'}
-    // {icon: '🔐', text: 'Hardened Security — Enforcing least-privilege access, encryption everywhere, and secure SDLC practices.'},
-    // {icon: '📈', text: 'Performance & Scalability — Systems engineered for high throughput, resilience, and horizontal growth.'},
-    // {icon: '⚙️', text: ' DevOps Discipline — CI/CD automation, GitOps workflows, and reproducible cloud infrastructure.'}
 ];
 
 const industryList = "FinTech, EdTech, Automation, Startups, Manufacturing";
@@ -90,52 +87,24 @@ export default function createHero() {
         ),
         React.createElement('div', {style: {flex: '1 1 360px', minWidth: 280}},
             React.createElement('div', {
-                    style: {
-                        borderRadius: 18,
-                        padding: 16,
-                        border: '1px solid rgba(0,0,0,0.05)'
-                    },
-                    className: 'bg-white shadow-md p-4 hover:shadow-2xl',
+                    className: 'bg-white shadow-md p-4 rounded-[18px] border border-black/5 hover:shadow-2xl transition-shadow duration-300',
                 },
                 <AnimatedLogo logoSrc={GlobalConstants.LOGO_ANIMATED} logoName={GlobalConstants.COMPANY_NAME}/>,
-                React.createElement('div', {style: {textAlign: 'center', marginTop: 12}},
+                React.createElement('div', {className: 'text-center mt-3'},
                     React.createElement(
                         'div', {
-                            style: {
-                                display: 'flex',
-                                justifyContent: 'center',
-                                width: '100%',
-                            }
+                            className: 'flex justify-center w-full',
                         },
                         React.createElement(
                             'div', {
-                                style: {
-                                    fontWeight: 700,
-                                    color: '#492079',
-                                    fontSize: 17,
-                                    fontStyle: 'italic',
-                                    overflow: 'hidden',
-                                    whiteSpace: 'nowrap',
-                                    display: 'inline-block',
-                                },
-                                className: 'animate-typewriter',
+                                className: 'animate-typewriter font-bold text-[#492079] text-[17px] italic overflow-hidden whitespace-nowrap inline-block',
                             }, GlobalConstants.COMPANY_MOTTO)
                     ),
                     React.createElement('div', {
-                        style: {
-                            color: '#6b7280',
-                            marginTop: 6,
-                            fontSize: 15
-                        }
+                        className: 'text-gray-500 mt-1.5 text-[15px]'
                     }, 'The Product Arm: From prototype to production — we craft secure, maintainable, and high-performance software that scales with your vision.'),
                     React.createElement('div', {
-                        style: {
-                            color: '#1FB6FD',
-                            marginTop: 10,
-                            fontSize: 16,
-                            fontWeight: 600,
-                            animation: ''
-                        }
+                        className: 'text-[#1FB6FD] mt-2.5 text-base font-semibold'
                     }, 'Partner with us to bring your next venture idea to life.')
                 ),
                 <Tags tags={industryList}/>

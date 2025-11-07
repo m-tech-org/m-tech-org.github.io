@@ -1,20 +1,24 @@
-import React from 'react'
-import createNav from "@components/common/Navigation.tsx";
-import createHero from "@components/home/Hero.tsx";
-import createServices from "@components/home/Services.tsx";
-import createWork from "@components/home/Work.tsx";
-import createCTA from "@components/home/Actions.tsx";
-import createFooter from "@components/common/Footer.tsx";
+import React from 'react';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import Services from '../components/Services';
+import Technologies from '../components/Technologies';
+import Process from '../components/Process';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
 
-export default function Home() {
-    return React.createElement('div', {
-            style: {}
-        },
-        createNav(),
-        createHero(),
-        // createServices(),
-        // createWork(),
-        // createCTA(),
-        createFooter(),
+const Home: React.FC = () => {
+    return (
+        <div className="min-h-screen">
+            <Header />
+            <Hero />
+            <Services />
+            <Technologies />
+            <Process />
+            <Contact />
+            <Footer />
+        </div>
     );
-}
+};
+
+export default Home;

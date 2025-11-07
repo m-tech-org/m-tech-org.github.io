@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import GlassModal from "../common/GlassModal.tsx";
+import ContactGlassModal from "../common/ContactGlassModal.tsx";
 
 export default function ContactUsButton() {
 
@@ -42,7 +42,7 @@ export default function ContactUsButton() {
                 )
             )}
 
-            <GlassModal
+            <ContactGlassModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
             />
