@@ -25,4 +25,3 @@ dist-ssr
 *.sw?
 git_deployments.json
 .vite
-package-lock.json
