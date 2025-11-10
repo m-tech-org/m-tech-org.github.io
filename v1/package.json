@@ -12,7 +12,7 @@
     "serve": "vite preview",
     "type-check": "tsc --noEmit",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d ../build --user 'm-tech-ltd <mtechltd2021@gmail.com>'  -m 'Deploy to GitHub Pages'"
+    "deploy": "gh-pages -d ../build -m 'Deploy to GitHub Pages'"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.10",
