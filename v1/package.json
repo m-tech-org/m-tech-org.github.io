@@ -1,7 +1,7 @@
 {
   "name": "m-tech-org.github.io",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "m-tech-ltd <mtechltd2021@gmail.com>",
   "type": "module",
   "scripts": {
