@@ -4,13 +4,15 @@ on:
   push:
     branches: [ develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop ]
 
+# Allow this workflow to create deployments and pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -21,11 +23,11 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 20 ]
-        app-version: [ v2 ]
+        node-version: [20]
 
     env:
       DEPLOY_USER: 'm-tech-ltd'
+      APP_VERSION: 'v2'
 
     steps:
       - uses: actions/checkout@v4
@@ -35,16 +37,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install v2 dependencies
-        working-directory: ./${{ matrix.app-version }}
+      - name: Install dependencies
+        working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
 
-      - name: Build v2 project
-        working-directory: ./${{ matrix.app-version }}
-        run: npm ci
-
-      - name: Build v2 project
-        working-directory: ./${{ matrix.app-version }}
+      - name: Build project
+        working-directory: ./${{ env.APP_VERSION }}
         run: npm run build
 
       - name: Setup Pages
