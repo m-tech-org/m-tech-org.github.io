@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "author": "m-tech-ltd <mtechltd2021@gmail.com>",
   "type": "module",
-  "homepage": "https://m-tech-org.github.io",
   "scripts": {
     "start": "vite",
     "build": "tsc --noCheck && vite build",
@@ -13,7 +12,7 @@
     "serve": "vite preview",
     "type-check": "tsc --noEmit",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -u 'm-tech-ltd <mtechltd2021@gmail.com>'  -m 'Deploy to GitHub Pages'"
+    "deploy": "gh-pages -d ../build --user 'm-tech-ltd <mtechltd2021@gmail.com>'  -m 'Deploy to GitHub Pages'"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.10",
@@ -41,5 +40,6 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "vite": "^7.1.7"
-  }
+  },
+  "homepage": "https://m-tech-org.github.io"
 }
