@@ -11,7 +11,7 @@ const Hero: React.FC = () => {
                         className="w-24 h-24 mx-auto mb-8"
                     />
                     <h1 className="text-5xl md:text-6xl font-bold text-purple-900 mb-6">
-                        M-Tech
+                        M-Tech <span className={'text-xs'}>v0.0.2</span>
                     </h1>
                     <p className="text-2xl md:text-3xl text-purple-700 mb-8 font-semibold">
                         Engineering Tomorrow. Automating Today.
