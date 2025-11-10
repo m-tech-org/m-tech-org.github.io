@@ -79,11 +79,6 @@ body {
     animation: slideInFromBottom 0.6s ease-out;
 }
 
-/* Smooth scrolling for the entire page */
-html {
-    scroll-behavior: smooth;
-}
-
 /* Custom scroll animations */
 .process-step {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -104,7 +99,135 @@ html {
 }
 
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
+    0% { background-position: 0 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+/* Enhanced animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40%, 43% {
+        transform: translateY(-10px);
+    }
+    70% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-pop-in {
+    animation: popIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+/* Fix for Intersection Observer */
+section {
+    will-change: transform, opacity;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+    .process-mobile-flow {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+
+    .process-step-mobile {
+        will-change: transform, opacity;
+    }
+}
+
+/* Prevent horizontal scrolling */
+.process-container {
+    overflow-x: hidden;
+}
+
+/* Smooth mobile animations */
+@media (max-width: 768px) {
+    .process-step {
+        transition-duration: 400ms;
+    }
+}
+
+/* Process section animations */
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40%, 43% {
+        transform: translateY(-10px);
+    }
+    70% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1024px) {
+    .process-desktop-flow {
+        display: flex !important;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .process-tablet-flow {
+        display: flex !important;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+    .process-mobile-flow {
+        display: block !important;
+    }
 }

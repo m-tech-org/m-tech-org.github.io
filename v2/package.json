@@ -7,7 +7,7 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "git config user.name \\\"m-tech-org\\\" && git config user.email \\\"mtechltd2021@gmail.com\\\" && npm run build",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {

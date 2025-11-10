@@ -9,7 +9,7 @@ export default defineConfig(({mode}) => {
         base: '/',
 
         build: {
-            outDir: "build",
+            outDir: "../build",
         },
 
         plugins: [react(), tagger()],

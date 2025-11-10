@@ -12,7 +12,6 @@ dist
 build
 dist-ssr
 *.local
-build
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +24,4 @@ build
 *.sln
 *.sw?
 git_deployments.json
+.vite
