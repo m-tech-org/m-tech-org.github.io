@@ -89,43 +89,32 @@ const Process: React.FC = () => {
                         </h3>
 
                         {/* Desktop Process Flow */}
-                        <div className="hidden lg:flex justify-center items-center space-x-2 xl:space-x-4 mb-6 md:mb-8 overflow-x-auto">
+                        <div className="hidden md:flex justify-center items-center space-x-4 mb-8">
                             {steps.map((step, index) => (
                                 <React.Fragment key={index}>
-                                    <div className="text-center flex flex-col items-center flex-shrink-0">
-                                        <div className={`
-                      bg-gradient-to-r from-purple-600 to-purple-800 text-white px-3 md:px-4 py-2 md:py-3 rounded-lg font-semibold 
-                      min-w-[120px] md:min-w-[140px] shadow-lg transition-all duration-500
-                      ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}
-                    `}
-                                             style={{
-                                                 transitionDelay: isVisible ? `${index * 150}ms` : '0ms'
-                                             }}
-                                        >
-                                            <div className="text-xs opacity-80 mb-1">Step {step.number}</div>
-                                            <div className="text-sm">{step.title.split(' ')[0]}</div>
-                                        </div>
-                                        <div className={`w-2 h-2 md:w-3 md:h-3 bg-accent-400 rounded-full mt-2 md:mt-4 ${isVisible ? 'animate-bounce' : 'opacity-0'}`}></div>
+                                    <div className={`
+                  bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-3 rounded-lg font-semibold 
+                  min-w-[140px] text-center shadow-lg transition-all duration-500
+                  ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}
+                `}
+                                         style={{
+                                             transitionDelay: isVisible ? `${index * 200}ms` : '0ms'
+                                         }}
+                                    >
+                                        <div className="text-xs opacity-80 mb-1">Step {step.number}</div>
+                                        <div className="text-sm">{step.title.split(' ')[0]}</div>
                                     </div>
 
                                     {index < steps.length - 1 && (
                                         <div className={`
-                      flex items-center text-purple-600 font-bold text-lg md:text-xl
-                      transition-opacity duration-500 flex-shrink-0
-                      ${isVisible ? 'opacity-100' : 'opacity-0'}
-                    `}
+                    text-purple-600 font-bold text-xl transition-opacity duration-500
+                    ${isVisible ? 'opacity-100' : 'opacity-0'}
+                  `}
                                              style={{
-                                                 transitionDelay: isVisible ? `${index * 150 + 75}ms` : '0ms'
+                                                 transitionDelay: isVisible ? `${index * 200 + 100}ms` : '0ms'
                                              }}
                                         >
-                                            <svg
-                                                className="w-5 h-5 md:w-6 md:h-6"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
+                                            →
                                         </div>
                                     )}
                                 </React.Fragment>
