@@ -39,6 +39,10 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./${{ env.APP_VERSION }}
+        run: npm install
+
+      - name: Install dependencies
+        working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
 
       - name: Build project
