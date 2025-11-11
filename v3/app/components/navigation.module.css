@@ -1,0 +1,204 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: light-dark(
+    color-mix(in srgb, var(--color-neutral-1) 70%, transparent),
+    color-mix(in srgb, var(--color-neutral-2) 70%, transparent)
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid light-dark(
+    color-mix(in srgb, var(--color-accent-6) 30%, transparent),
+    color-mix(in srgb, var(--color-accent-7) 20%, transparent)
+  );
+  box-shadow: 
+    0 4px 24px light-dark(
+      color-mix(in srgb, var(--color-accent-6) 8%, transparent),
+      color-mix(in srgb, black 30%, transparent)
+    ),
+    inset 0 1px 0 light-dark(
+      color-mix(in srgb, white 40%, transparent),
+      color-mix(in srgb, white 10%, transparent)
+    );
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-6);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-5);
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-11),
+    var(--color-secondary-11)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out);
+  letter-spacing: -0.02em;
+}
+
+.logo:hover {
+  filter: brightness(1.2);
+  transform: translateY(-1px);
+}
+
+.logoImage {
+  height: 36px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px var(--color-accent-7));
+  transition: transform 0.3s var(--ease-out);
+}
+
+.logo:hover .logoImage {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-neutral-12);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-2);
+  transition: all 0.2s var(--ease-out);
+}
+
+.burger:hover {
+  background: var(--color-accent-4);
+  color: var(--color-accent-11);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: var(--color-neutral-11);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: var(--font-size-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-3);
+  transition: all 0.3s var(--ease-out);
+  position: relative;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent-9),
+    var(--color-secondary-9)
+  );
+  transition: all 0.3s var(--ease-out);
+  transform: translateX(-50%);
+}
+
+.link:hover {
+  color: var(--color-accent-11);
+  background: light-dark(
+    color-mix(in srgb, var(--color-accent-3) 50%, transparent),
+    color-mix(in srgb, var(--color-accent-4) 60%, transparent)
+  );
+}
+
+.link:hover::before {
+  width: 80%;
+}
+
+.link.active {
+  color: var(--color-accent-11);
+  background: light-dark(
+    color-mix(in srgb, var(--color-accent-4) 60%, transparent),
+    color-mix(in srgb, var(--color-accent-5) 70%, transparent)
+  );
+  font-weight: 600;
+}
+
+.link.active::before {
+  width: 80%;
+}
+
+.overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+  }
+
+  .links {
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    flex-direction: column;
+    background: light-dark(
+      color-mix(in srgb, var(--color-neutral-1) 85%, transparent),
+      color-mix(in srgb, var(--color-neutral-2) 85%, transparent)
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: var(--space-6);
+    border-radius: var(--radius-4);
+    box-shadow: 
+      0 20px 40px -10px light-dark(
+        color-mix(in srgb, var(--color-accent-9) 15%, transparent),
+        color-mix(in srgb, black 40%, transparent)
+      );
+    border: 1px solid light-dark(
+      color-mix(in srgb, var(--color-neutral-6) 50%, transparent),
+      color-mix(in srgb, var(--color-neutral-7) 30%, transparent)
+    );
+    transition: right 0.3s var(--ease-out);
+    min-width: 200px;
+    margin: var(--space-4);
+    align-items: stretch;
+  }
+
+  .links.open {
+    right: 0;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: color-mix(in srgb, black 40%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-out);
+  }
+
+  .links.open ~ .overlay {
+    opacity: 1;
+    pointer-events: all;
+  }
+}

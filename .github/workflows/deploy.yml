@@ -27,7 +27,7 @@ jobs:
 
     env:
       DEPLOY_USER: 'm-tech-ltd'
-      APP_VERSION: 'v2'
+      APP_VERSION: 'v3'
 
     steps:
       - uses: actions/checkout@v4
