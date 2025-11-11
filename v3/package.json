@@ -4,6 +4,7 @@
   "version": "0.0.3",
   "type": "module",
   "scripts": {
+    "vite": "vite",
     "start": "react-router dev",
     "build": "react-router build",
     "typecheck": "react-router typegen && tsc"
@@ -13,7 +14,6 @@
     "@hookform/resolvers": "^5.2.2",
     "@react-router/node": "^7.9.5",
     "@react-router/serve": "^7.9.5",
-    "@vitejs/plugin-react": "^5.1.0",
     "classnames": "^2.5.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",

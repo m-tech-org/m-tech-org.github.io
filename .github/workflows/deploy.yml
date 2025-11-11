@@ -23,7 +23,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [ 20 ]
 
     env:
       DEPLOY_USER: 'm-tech-ltd'
@@ -37,13 +37,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
+      - name: Install packages
         working-directory: ./${{ env.APP_VERSION }}
         run: npm install
 
       - name: Install dependencies
         working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
+
+      - name: Type check
+        working-directory: ./${{ env.APP_VERSION }}
+        run: npm run typecheck
 
       - name: Build project
         working-directory: ./${{ env.APP_VERSION }}
@@ -55,7 +59,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./build/
 
       - name: Show build files
         run: ls -la ./build/
@@ -72,3 +76,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Deployment Ready
+        run: echo "Build completed successfully!"
+
