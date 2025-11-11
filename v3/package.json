@@ -1,11 +1,11 @@
 {
-  "name": "m-tech-portfolio",
+  "name": "m-tech-website",
   "private": true,
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "start": "react-router dev",
     "build": "react-router build",
-    "prod": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@react-router/node": "^7.9.5",
     "@react-router/serve": "^7.9.5",
+    "@vitejs/plugin-react": "^5.1.0",
     "classnames": "^2.5.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
@@ -42,5 +43,6 @@
   "prettier": {
     "printWidth": 120,
     "endOfLine": "auto"
-  }
+  },
+  "homepage": "https://m-tech-org.github.io"
 }
