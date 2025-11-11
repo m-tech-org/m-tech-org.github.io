@@ -1,5 +1,4 @@
 import { Sun, Moon, Monitor } from "lucide-react";
-import { useColorScheme } from "@dazl/color-scheme/react";
 import { Button } from "~/components/ui/button/button";
 import {
   DropdownMenu,
@@ -29,38 +28,36 @@ const ICON_LABEL = {
 };
 
 export function ColorSchemeToggle({ triggerText = false, optionText = true }: ColorSchemeToggleProps) {
-  const { configScheme, resolvedScheme, setColorScheme } = useColorScheme();
-  const { icon, label } = ICON_LABEL[resolvedScheme];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" aria-label="Toggle color scheme">
-          {icon}
-          {triggerText && label}
+          {/*{icon}*/}
+          {/*{triggerText && label}*/}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
-          onClick={() => setColorScheme("light")}
+          // onClick={() => setColorScheme("light")}
           className={style.option}
-          data-selected={configScheme === "light"}
+          // data-selected={configScheme === "light"}
         >
           {ICON_LABEL.light.icon}
           {optionText && ICON_LABEL.light.label}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => setColorScheme("dark")}
+          // onClick={() => setColorScheme("dark")}
           className={style.option}
-          data-selected={configScheme === "dark"}
+          // data-selected={configScheme === "dark"}
         >
           {ICON_LABEL.dark.icon}
           {optionText && ICON_LABEL.dark.label}
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => setColorScheme("system")}
+          // onClick={() => setColorScheme("system")}
           className={style.option}
-          data-selected={configScheme === "system"}
+          // data-selected={configScheme === "system"}
         >
           {ICON_LABEL.system.icon}
           {optionText && ICON_LABEL.system.label}
