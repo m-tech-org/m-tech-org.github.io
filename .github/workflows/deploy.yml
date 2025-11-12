@@ -51,7 +51,7 @@ jobs:
 
       - name: Build project
         working-directory: ./${{ env.APP_VERSION }}
-        run: npm run build
+        run: npm run build:static
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

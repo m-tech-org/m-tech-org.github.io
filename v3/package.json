@@ -7,6 +7,7 @@
     "vite": "vite",
     "start": "react-router dev",
     "build": "react-router build",
+    "build:static": "node ./scripts/build-scripts.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
