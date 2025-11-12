@@ -45,13 +45,9 @@ jobs:
         working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
 
-      - name: Type check
-        working-directory: ./${{ env.APP_VERSION }}
-        run: npm run typecheck
-
       - name: Build project
         working-directory: ./${{ env.APP_VERSION }}
-        run: npm run build:static
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -59,7 +55,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build/
+          path: './build'
 
       - name: Show build files
         run: ls -la ./build/

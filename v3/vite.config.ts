@@ -1,12 +1,9 @@
-import {reactRouter} from "@react-router/dev/vite";
-import {defineConfig} from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-    plugins: [
-        reactRouter(),
-        tsconfigPaths()
-    ],
+    plugins: [react(), tsconfigPaths()],
     base: '/',
     build: {
         outDir: '../build',
@@ -14,8 +11,5 @@ export default defineConfig({
     },
     server: {
         port: 3000,
-        hmr: {
-            overlay: false
-        }
     }
 });

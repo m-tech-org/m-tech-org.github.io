@@ -1,28 +1,43 @@
-# Welcome to React Router!
+# M-Tech Portfolio
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern, responsive company portfolio built with React, TypeScript, and Vite.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 CSS Modules for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🚀 Pure React (no routing framework)
+- ⚡ Vite for fast development and optimized builds
+- 🎨 Glass morphism design with gradient effects
+- 📱 Fully responsive with mobile menu
+- 💌 EmailJS integration for contact form
+- 🎯 Hash-based client-side navigation
+- 🔧 TypeScript for type safety
+- 🎨 CSS Modules for scoped styling
 
-### Styling & Theming
+## Project Structure
 
-- This project uses CSS modules as the styling solution, Radix as the component library, and Open Props for styling tokens and theming
-- Project theme is defined in `app/styles/theme.css`, used as a design system for all UI building
-- Base design tokens are defined in `app/styles/tokens/<token-type>.css`, used as an immutable base design system for all the theme and all UI
+```
+src/
+├── components/       # Reusable UI components
+│   ├── ui/          # UI library components (buttons, cards, etc.)
+│   ├── Navigation.tsx
+│   └── Footer.tsx
+├── pages/           # Page components
+│   ├── Home.tsx
+│   ├── About.tsx
+│   ├── Services.tsx
+│   ├── Projects.tsx
+│   └── Contact.tsx
+├── data/            # Mock data
+├── hooks/           # Custom React hooks
+├── services/        # Business logic (email service)
+├── styles/          # Global styles and tokens
+├── App.tsx          # Main app component with routing
+└── main.tsx         # Entry point
+```
 
 ## Getting Started
 
-### Installation
-
-Install the dependencies:
+### Install Dependencies
 
 ```bash
 npm install
@@ -30,34 +45,79 @@ npm install
 
 ### Development
 
-Start the development server with HMR:
-
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## Building for Production
-
-Create a production build:
+### Build for Production
 
 ```bash
 npm run build
 ```
 
+The build output will be in the `dist/` directory.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Navigation
+
+The app uses hash-based routing:
+
+- `#home` - Home page
+- `#about` - About us
+- `#services` - Services listing
+- `#projects` - Portfolio projects
+- `#contact` - Contact form
+
+## EmailJS Setup
+
+To enable the contact form:
+
+1. Sign up at [EmailJS](https://www.emailjs.com/)
+2. Create a service and email template
+3. Copy `.env.example` to `.env`
+4. Add your EmailJS credentials
+
+See `EMAILJS_SETUP.md` for detailed instructions.
+
 ## Deployment
 
-### DIY Deployment
+The built static files can be deployed to any static hosting service:
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
+- **GitHub Pages**: Copy `dist/` contents to your gh-pages branch
+- **Netlify**: Deploy the `dist/` folder
+- **Vercel**: Deploy the `dist/` folder
+- **Cloudflare Pages**: Deploy the `dist/` folder
 
-Make sure to deploy the output of `npm run build`
+### Build Output
 
 ```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+dist/
+├── index.html
+├── assets/
+│   ├── index-[hash].js
+│   └── index-[hash].css
+└── [static assets]
 ```
+
+## Technologies
+
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **CSS Modules** - Scoped styling
+- **Lucide React** - Icons
+- **Radix UI** - Accessible components
+- **EmailJS** - Email service
+- **React Hook Form** - Form management
+- **Sonner** - Toast notifications
+
+## License
+
+Private project - All rights reserved
