@@ -39,6 +39,7 @@ export async function sendContactEmail(formData: ContactFormData): Promise<Email
       company: formData.company,
       message: formData.message,
       to_email: emailjsConfig.receiverEmail,
+      time: String(new Date()),
     };
 
     // Send email using EmailJS
