@@ -48,6 +48,14 @@ jobs:
       - name: Build project
         working-directory: ./${{ env.APP_VERSION }}
         run: npm run build
+        env:
+          # This is the 'env' block.
+          # LEFT SIDE (Key): This is the environment variable name available during 'npm run build'.
+          # RIGHT SIDE (Value): This pulls the value from the GitHub Secret named VITE_RECEIVER_EMAIL.
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_RECEIVER_EMAIL: ${{ secrets.VITE_RECEIVER_EMAIL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
