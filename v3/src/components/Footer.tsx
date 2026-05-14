@@ -10,7 +10,7 @@ export function Footer() {
                         <h3>M-Tech</h3>
                         <p>Leading technology solutions provider delivering innovation and excellence since 2021.</p>
                         <div className={styles.social}>
-                            <a href="https://github.com/m-tech-ltd" className={styles.socialLink} aria-label="GitHub">
+                            <a href="https://github.com/m-tech-org" className={styles.socialLink} aria-label="GitHub">
                                 <Github size={20}/>
                             </a>
                             {/*<a href="https://linkedin.com" className={styles.socialLink} aria-label="LinkedIn">*/}
