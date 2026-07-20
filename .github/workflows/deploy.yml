@@ -22,7 +22,6 @@ jobs:
         node-version: [ 24 ]
     env:
       DEPLOY_USER: 'm-tech-ltd'
-      APP_VERSION: 'v3'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6.0.2
@@ -35,15 +34,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install packages
-        working-directory: ./${{ env.APP_VERSION }}
+        working-directory: ./
         run: npm install
 
       - name: Install dependencies
-        working-directory: ./${{ env.APP_VERSION }}
+        working-directory: ./
         run: npm ci
 
       - name: Build project
-        working-directory: ./${{ env.APP_VERSION }}
+        working-directory: ./
         run: npm run build
         env:
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}

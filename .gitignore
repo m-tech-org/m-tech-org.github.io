@@ -7,9 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-build
+node_modules/
+dist/
+build/
 dist-ssr
 *.local
 
@@ -25,3 +25,4 @@ dist-ssr
 *.sw?
 git_deployments.json
 .vite
+.env
