@@ -69,6 +69,15 @@ export function Footer() {
 
                 <div className={styles.bottom}>
                     <p>&copy; 2021-{new Date().getFullYear()} M-Tech. All rights reserved.</p>
+                    <a
+                        href={`https://github.com/m-tech-org/m-tech-org.github.io/commit/${__GIT_SHA__}`}
+                        className={styles.version}
+                        title={`Built ${__BUILD_DATE__}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        v{__APP_VERSION__} <span className={styles.versionSha}>· {__GIT_SHA__}</span>
+                    </a>
                     <p className={styles.motto}>Innovate. Integrate. Inspire.</p>
                 </div>
             </div>
