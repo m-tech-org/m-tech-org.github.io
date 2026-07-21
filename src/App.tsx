@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Toaster } from './components/ui/toaster/toaster.tsx';
-import { ChatWidget } from './components/ai-chat/ChatWidget.tsx';
+import { ChatWidgetMount } from './components/ai-chat/ChatWidgetMount.tsx';
+import { aiChatConfig } from './config/aiChat.ts';
 import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import Services from './pages/Services.tsx';
@@ -42,7 +43,16 @@ function App() {
     <>
       {renderPage()}
       <Toaster />
-      <ChatWidget />
+      <ChatWidgetMount
+        workerUrl={aiChatConfig.workerUrl}
+        title={aiChatConfig.title}
+        placeholder={aiChatConfig.placeholder}
+        unconfiguredMessage={aiChatConfig.unconfiguredMessage}
+        greetingMessage={aiChatConfig.greetingMessage}
+        greetingDelayMs={aiChatConfig.greetingDelayMs}
+        greetingCooldownMs={aiChatConfig.greetingCooldownMs}
+        theme="auto"
+      />
     </>
   );
 }
