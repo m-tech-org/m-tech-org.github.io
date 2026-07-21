@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Toaster } from './components/ui/toaster/toaster.tsx';
+import { ChatWidget } from './components/ai-chat/ChatWidget.tsx';
 import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import Services from './pages/Services.tsx';
@@ -41,6 +42,7 @@ function App() {
     <>
       {renderPage()}
       <Toaster />
+      <ChatWidget />
     </>
   );
 }

@@ -9,6 +9,7 @@ A modern, responsive company portfolio built with React, TypeScript, and Vite.
 - 🎨 Glass morphism design with gradient effects
 - 📱 Fully responsive with mobile menu
 - 💌 EmailJS integration for contact form
+- 🤖 Floating AI chat assistant, persistent and draggable across all pages
 - 🎯 Hash-based client-side navigation
 - 🔧 TypeScript for type safety
 - 🎨 CSS Modules for scoped styling
@@ -29,10 +30,13 @@ src/
 │   └── Contact.tsx
 ├── data/            # Typed content data (services, projects, team)
 ├── hooks/           # Custom React hooks
-├── services/        # Business logic (email service)
+├── services/        # Business logic (email, AI chat)
 ├── styles/          # Global styles and tokens
 ├── App.tsx          # Main app component with routing
 └── main.tsx         # Entry point
+
+workers/
+└── ai-proxy/        # Cloudflare Worker proxying the AI chat widget (see its README)
 ```
 
 ## Getting Started
@@ -88,9 +92,15 @@ To enable the contact form:
 
 See `EMAILJS_SETUP.md` for detailed instructions.
 
+## AI Chat Assistant Setup
+
+The floating chat widget on every page calls a Cloudflare Worker proxy so the model API key never reaches the browser. Without `VITE_AI_WORKER_URL` configured, the widget still renders but shows a "not configured yet" state.
+
+See `workers/ai-proxy/README.md` for deploying the Worker, then set `VITE_AI_WORKER_URL` in `.env` (local) or as a repo secret (production).
+
 ## Deployment
 
-`.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages automatically on every push (or PR) to `develop`. The contact form's EmailJS credentials are injected at build time from repo secrets (`VITE_EMAILJS_PUBLIC_KEY`, `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_RECEIVER_EMAIL`); locally these come from `.env` (see `EMAILJS_SETUP.md`).
+`.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages automatically on every push (or PR) to `develop`. The contact form's EmailJS credentials and the AI chat Worker URL are injected at build time from repo secrets (`VITE_EMAILJS_PUBLIC_KEY`, `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_RECEIVER_EMAIL`, `VITE_AI_WORKER_URL`); locally these come from `.env` (see `EMAILJS_SETUP.md` and `workers/ai-proxy/README.md`).
 
 `scripts/getDeployments.sh` and `scripts/remove_deployments.py` are maintenance scripts for listing/pruning old GitHub Pages deployments via the `gh` CLI.
 

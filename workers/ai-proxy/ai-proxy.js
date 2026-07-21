@@ -1,0 +1,138 @@
+import { SYSTEM_CONTEXT } from "./context.js";
+
+const ALLOWED_ORIGINS = new Set([
+    "https://m-tech-org.github.io",
+    // Local dev frontend (vite.config.ts server.port). Origin is already
+    // client-supplied and spoofable by non-browser callers (see below), so
+    // allowing localhost doesn't weaken anything a curl script couldn't
+    // already do by spoofing the production origin directly.
+    "http://localhost:3000",
+]);
+
+function corsHeaders(origin) {
+    return {
+        "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Vary": "Origin",
+    };
+}
+
+const MAX_BODY_BYTES = 80_000;
+const MAX_MESSAGES = 60;
+const MAX_MESSAGE_CHARS = 4_000;
+const MAX_TOTAL_CHARS = 60_000;
+const MAX_TEMPERATURE = 2;
+const MAX_TOKENS_CAP = 1024;
+const ALLOWED_ROLES = new Set(["user", "assistant"]);
+const UPSTREAM_TIMEOUT_MS = 30_000;
+
+export default {
+    async fetch(request, env) {
+        const origin = request.headers.get("Origin") ?? "";
+        const cors = corsHeaders(origin);
+
+        // Preflight — return immediately, no other logic
+        if (request.method === "OPTIONS") {
+            return new Response(null, { status: 204, headers: cors });
+        }
+
+        if (request.method !== "POST") {
+            return json({ error: "Method Not Allowed" }, 405, cors);
+        }
+
+        // Origin is client-supplied and trivially spoofed by non-browser
+        // callers, so it's not real auth — the rate limiter below is what
+        // actually bounds abuse of the upstream key.
+        if (!ALLOWED_ORIGINS.has(origin)) {
+            return json({ error: "Forbidden" }, 403, cors);
+        }
+
+        if (!env.AI_API_KEY || !env.AI_BASE_URL || !env.AI_MODEL) {
+            return json({ error: "Worker secrets not configured" }, 500, cors);
+        }
+
+        if (env.RATE_LIMITER) {
+            const clientIp = request.headers.get("CF-Connecting-IP") ?? "unknown";
+            const { success } = await env.RATE_LIMITER.limit({ key: clientIp });
+            if (!success) {
+                return json({ error: "Too Many Requests" }, 429, cors);
+            }
+        }
+
+        const contentLength = Number(request.headers.get("Content-Length") ?? "0");
+        if (contentLength > MAX_BODY_BYTES) {
+            return json({ error: "Payload Too Large" }, 413, cors);
+        }
+
+        let payload;
+        try {
+            payload = sanitizeChatRequest(await request.json(), env.AI_MODEL);
+        } catch (err) {
+            return json({ error: "Bad Request", detail: String(err.message ?? err) }, 400, cors);
+        }
+
+        try {
+            const upstream = await fetch(`${env.AI_BASE_URL}/chat/completions`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${env.AI_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+                signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+            });
+
+            const data = await upstream.json();
+            return json(data, upstream.status, cors);
+        } catch (err) {
+            return json({ error: "Proxy error", detail: String(err) }, 502, cors);
+        }
+    },
+};
+
+// Whitelists fields and clamps values so a client can't inflate upstream cost
+// (huge max_tokens, unbounded message count/length) or smuggle unexpected
+// params. The system prompt is fixed server-side (SYSTEM_CONTEXT) — clients
+// can only ever send user/assistant turns, never override grounding context.
+function sanitizeChatRequest(body, model) {
+    if (!body || typeof body !== "object") throw new Error("invalid request body");
+
+    const { messages, temperature, max_tokens } = body;
+
+    if (!Array.isArray(messages) || messages.length === 0) throw new Error("messages must be a non-empty array");
+    if (messages.length > MAX_MESSAGES) throw new Error(`too many messages (max ${MAX_MESSAGES})`);
+
+    let totalChars = SYSTEM_CONTEXT.length;
+    const safeMessages = messages.map((m) => {
+        if (!m || typeof m !== "object") throw new Error("invalid message");
+        if (!ALLOWED_ROLES.has(m.role)) throw new Error(`invalid role: ${m.role}`);
+        if (typeof m.content !== "string") throw new Error("message content must be a string");
+        if (m.content.length > MAX_MESSAGE_CHARS) throw new Error(`message too long (max ${MAX_MESSAGE_CHARS} chars)`);
+        totalChars += m.content.length;
+        return { role: m.role, content: m.content };
+    });
+    if (totalChars > MAX_TOTAL_CHARS) throw new Error("conversation too long");
+
+    const safeTemperature = Number.isFinite(temperature)
+        ? Math.min(Math.max(temperature, 0), MAX_TEMPERATURE)
+        : 0.7;
+    const safeMaxTokens = Number.isFinite(max_tokens)
+        ? Math.min(Math.max(max_tokens, 1), MAX_TOKENS_CAP)
+        : MAX_TOKENS_CAP;
+
+    return {
+        model,
+        temperature: safeTemperature,
+        max_tokens: safeMaxTokens,
+        messages: [{ role: "system", content: SYSTEM_CONTEXT }, ...safeMessages],
+        reasoning: { enabled: false },
+    };
+}
+
+function json(body, status = 200, cors = {}) {
+    return new Response(JSON.stringify(body), {
+        status,
+        headers: { ...cors, "Content-Type": "application/json" },
+    });
+}

@@ -1,0 +1,328 @@
+.bubble {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-accent-9), var(--color-secondary-9));
+  color: white;
+  cursor: grab;
+  touch-action: none;
+  box-shadow: var(--shadow-3);
+  z-index: 1200;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.bubble:hover {
+  transform: scale(1.06);
+  box-shadow: var(--shadow-4);
+}
+
+.bubble:active {
+  cursor: grabbing;
+}
+
+.bubble:focus-visible {
+  outline: 2px solid var(--color-accent-9);
+  outline-offset: 3px;
+}
+
+.panel {
+  position: fixed;
+  z-index: 1199;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-neutral-1);
+  border: 1px solid var(--color-neutral-4);
+  border-radius: var(--radius-6);
+  box-shadow: var(--shadow-4);
+  overflow: hidden;
+  animation: chatPanelIn 0.18s var(--ease-out);
+  transition: top 0.18s var(--ease-out), left 0.18s var(--ease-out), width 0.18s var(--ease-out),
+    height 0.18s var(--ease-out);
+}
+
+.panelExpanded {
+  border-radius: var(--radius-4);
+}
+
+.greeting {
+  position: fixed;
+  z-index: 1198;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  max-width: 220px;
+  background: var(--color-neutral-1);
+  border: 1px solid var(--color-neutral-4);
+  border-radius: var(--radius-5);
+  box-shadow: var(--shadow-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  animation: chatPanelIn 0.18s var(--ease-out);
+}
+
+.greetingBody {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-size: var(--font-size-1);
+  line-height: var(--font-lineheight-3);
+  color: var(--color-neutral-12);
+  cursor: pointer;
+}
+
+.greetingClose {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: var(--radius-2);
+  background: transparent;
+  color: var(--color-neutral-9);
+  cursor: pointer;
+}
+
+.greetingClose:hover {
+  background: var(--color-neutral-3);
+}
+
+.greetingClose:focus-visible,
+.greetingBody:focus-visible {
+  outline: 2px solid var(--color-accent-9);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .greeting {
+    animation: none;
+    transition: none;
+  }
+  .bubble {
+    transition: none;
+  }
+}
+
+@keyframes chatPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, var(--color-accent-9), var(--color-secondary-9));
+  color: white;
+  flex-shrink: 0;
+}
+
+.panelTitle {
+  font-weight: 600;
+  font-size: var(--font-size-1);
+}
+
+.panelHeaderActions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-3);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s var(--ease-out);
+}
+
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 1px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.emptyState {
+  color: var(--color-neutral-10);
+  font-size: var(--font-size-1);
+  line-height: var(--font-lineheight-3);
+  text-align: center;
+  margin: auto 0;
+}
+
+.messageUser {
+  align-self: flex-end;
+  max-width: 85%;
+  background: var(--color-accent-9);
+  color: white;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-5);
+  border-bottom-right-radius: var(--radius-2);
+  font-size: var(--font-size-1);
+  line-height: var(--font-lineheight-3);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.messageAssistant {
+  align-self: flex-start;
+  max-width: 85%;
+  background: var(--color-neutral-3);
+  color: var(--color-neutral-12);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-5);
+  border-bottom-left-radius: var(--radius-2);
+  font-size: var(--font-size-1);
+  line-height: var(--font-lineheight-3);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.typingDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typingDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-neutral-10);
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typingDot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typingDot {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+.errorMessage {
+  align-self: center;
+  color: var(--color-error-11);
+  font-size: var(--font-size-0);
+  text-align: center;
+}
+
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-neutral-4);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  resize: none;
+  max-height: 96px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-4);
+  border: 1px solid var(--color-neutral-6);
+  background: var(--color-neutral-2);
+  color: var(--color-neutral-12);
+  font-family: inherit;
+  font-size: var(--font-size-1);
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--color-accent-9);
+  outline-offset: 1px;
+}
+
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: var(--radius-4);
+  background: var(--color-accent-9);
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s var(--ease-out);
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sendButton:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+.sendButton:focus-visible {
+  outline: 2px solid var(--color-accent-9);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .bubble {
+    width: 52px;
+    height: 52px;
+  }
+}
