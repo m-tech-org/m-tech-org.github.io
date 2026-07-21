@@ -2,10 +2,19 @@ import { useEffect } from 'react';
 import { Navigation } from '../components/Navigation.tsx';
 import { Footer } from '../components/Footer.tsx';
 import { Button } from '../components/ui/button/button.tsx';
-import { Code, Smartphone, Cloud, ArrowRight } from 'lucide-react';
+import { Code, Smartphone, Cloud, Brain, Shield, Lightbulb, ArrowRight } from 'lucide-react';
 import { services } from '../data/services.ts';
 import { projects } from '../data/projects.ts';
 import styles from './home.module.css';
+
+const iconMap: Record<string, any> = {
+  Code,
+  Smartphone,
+  Cloud,
+  Brain,
+  Shield,
+  Lightbulb,
+};
 
 export default function Home() {
   useEffect(() => {
@@ -63,7 +72,7 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>Our Services</h2>
           <div className={styles.servicesGrid}>
             {featuredServices.map((service) => {
-              const IconComponent = service.icon === 'Code' ? Code : service.icon === 'Smartphone' ? Smartphone : Cloud;
+              const IconComponent = iconMap[service.icon] || Code;
               return (
                 <div key={service.id} className={styles.serviceCard}>
                   <IconComponent className={styles.serviceIcon} />

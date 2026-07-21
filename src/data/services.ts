@@ -9,6 +9,15 @@ export interface Service {
 
 export const services: Service[] = [
   {
+    id: "ai-ml",
+    title: "AI & Machine Learning",
+    category: "Innovation",
+    description:
+      "Intelligent solutions powered by artificial intelligence and machine learning to automate processes and unlock insights.",
+    icon: "Brain",
+    features: ["Predictive Analytics", "Natural Language Processing", "Computer Vision", "Recommendation Systems"],
+  },
+  {
     id: "web-development",
     title: "Web Development",
     category: "Development",
@@ -34,15 +43,6 @@ export const services: Service[] = [
       "Scalable cloud infrastructure and migration services to optimize performance, security, and cost-efficiency.",
     icon: "Cloud",
     features: ["Cloud Migration", "Infrastructure as Code", "DevOps Implementation", "Serverless Architecture"],
-  },
-  {
-    id: "ai-ml",
-    title: "AI & Machine Learning",
-    category: "Innovation",
-    description:
-      "Intelligent solutions powered by artificial intelligence and machine learning to automate processes and unlock insights.",
-    icon: "Brain",
-    features: ["Predictive Analytics", "Natural Language Processing", "Computer Vision", "Recommendation Systems"],
   },
   {
     id: "cybersecurity",

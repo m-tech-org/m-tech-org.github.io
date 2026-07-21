@@ -137,29 +137,6 @@
   font-size: var(--font-size-1);
 }
 
-.version {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: var(--font-size-0);
-  color: var(--color-neutral-10);
-  text-decoration: none;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-2);
-  border: 1px solid light-dark(
-    color-mix(in srgb, var(--color-neutral-6) 40%, transparent),
-    color-mix(in srgb, var(--color-neutral-7) 50%, transparent)
-  );
-  transition: all 0.2s var(--ease-out);
-}
-
-.version:hover {
-  color: var(--color-accent-11);
-  border-color: var(--color-accent-8);
-}
-
-.versionSha {
-  color: var(--color-accent-9);
-}
-
 .motto {
   font-style: italic;
   background: linear-gradient(

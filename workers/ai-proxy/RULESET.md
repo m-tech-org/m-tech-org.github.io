@@ -9,6 +9,7 @@
 - **SaaS**: Software as a Service
 - **CMS**: Content Management System
 - **CI**: Continuous Integration
+- **CD**: Continuous Deployment
 - **JWT**: JSON Web Token
 - **API**: Application Programming Interface
 

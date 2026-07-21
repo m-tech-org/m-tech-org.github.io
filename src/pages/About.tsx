@@ -14,7 +14,12 @@ export default function About() {
             <Navigation/>
 
             <section className={styles.hero}>
-                <h1 className={styles.heroTitle}>About M-Tech</h1>
+                <div className={styles.titleWrap}>
+                    <h1 className={styles.heroTitle}>About M-Tech</h1>
+                    <span className={styles.version} title={`Built ${__BUILD_DATE__}`}>
+                        v{__APP_VERSION__} <span className={styles.versionSha}>· {__GIT_SHA__}</span>
+                    </span>
+                </div>
                 <p className={styles.heroSubtitle}>Morph Technologies</p>
                 <p className={styles.heroDescription}>
                     Pioneering technology solutions since 2021. We are a team of passionate innovators committed to
