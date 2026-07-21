@@ -1,5 +1,6 @@
 import styles from './footer.module.css';
 import {Github, Linkedin, Mail} from "lucide-react";
+import {services} from '../data/services.ts';
 
 export function Footer() {
     return (
@@ -39,21 +40,11 @@ export function Footer() {
                     <div className={styles.section}>
                         <h3>Services</h3>
                         <ul className={styles.links}>
-                            <li>
-                                <a href="#services">Web Development</a>
-                            </li>
-                            <li>
-                                <a href="#services">Mobile Apps</a>
-                            </li>
-                            <li>
-                                <a href="#services">Cloud Solutions</a>
-                            </li>
-                            <li>
-                                <a href="#services">AI & ML</a>
-                            </li>
-                            <li>
-                                <a href="#services">Cybersecurity</a>
-                            </li>
+                            {services.map((service) => (
+                                <li key={service.id}>
+                                    <a href="#services">{service.title}</a>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 

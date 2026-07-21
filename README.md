@@ -41,7 +41,7 @@ workers/
 
 ## Getting Started
 
-A `Makefile` wraps the common commands — run `make help` to list them (`make install`, `make start`, `make build`, `make preview`, `make deployments-list`, `make deployments-remove LOGIN=<user>`).
+A `Makefile` wraps the common commands — run `make help` to list them (`make install`, `make start`, `make build`, `make preview`, `make deployments-list`, `make deployments-remove LOGIN=<user>`, `make worker-dev`, `make worker-deploy`, `make worker-tail`, `make worker-secrets`).
 
 ### Install Dependencies
 
