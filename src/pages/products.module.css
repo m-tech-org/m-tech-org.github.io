@@ -30,13 +30,13 @@
   margin: 0 auto;
 }
 
-.projectsGrid {
+.productsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: var(--space-7);
 }
 
-.projectCard {
+.productCard {
   background: var(--color-neutral-2);
   border: 1px solid var(--color-neutral-4);
   border-radius: var(--radius-4);
@@ -45,6 +45,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  cursor: pointer;
   animation: cardEnter 0.6s var(--ease-out) both;
 }
 
@@ -59,25 +60,52 @@
   }
 }
 
-.projectCard:hover {
+.productCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 0 30px rgba(1, 162, 199, 0.3);
 }
 
-.projectImage {
+.upcomingCard {
+  position: relative;
+  cursor: default;
+}
+
+.upcomingCard:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.upcomingCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.45);
+  pointer-events: none;
+}
+
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.upcomingBanner img {
+  filter: grayscale(1);
+}
+
+.productImage {
   width: 100%;
-  height: 280px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
-.projectContent {
+.productContent {
   padding: var(--space-6);
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.projectCategoryRow {
+.productCategoryRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,7 +113,7 @@
   margin: 0 0 var(--space-2) 0;
 }
 
-.projectCategory {
+.productCategory {
   color: var(--color-accent-9);
   font-size: var(--font-size-0);
   font-weight: 600;
@@ -94,9 +122,9 @@
   margin: 0;
 }
 
-.licenseBadge {
-  background: var(--color-success-3);
-  color: var(--color-success-11);
+.priceBadge {
+  background: var(--color-accent-3);
+  color: var(--color-accent-11);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-2);
   font-size: var(--font-size-0);
@@ -105,21 +133,21 @@
   white-space: nowrap;
 }
 
-.projectTitle {
+.productTitle {
   font: var(--font-subheading);
   font-size: var(--font-size-4);
   color: var(--color-neutral-12);
   margin: 0 0 var(--space-3) 0;
 }
 
-.projectDescription {
+.productDescription {
   color: var(--color-neutral-11);
   line-height: var(--font-lineheight-3);
   margin: 0 0 var(--space-4) 0;
   flex: 1;
 }
 
-.projectMeta {
+.productMeta {
   display: flex;
   gap: var(--space-5);
   margin-bottom: var(--space-4);
@@ -145,7 +173,7 @@
   font-weight: 600;
 }
 
-.projectTech {
+.productTech {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
@@ -161,7 +189,7 @@
   font-weight: 500;
 }
 
-.projectOutcome {
+.productOutcome {
   background: var(--color-success-2);
   border-left: 3px solid var(--color-success-9);
   padding: var(--space-3) var(--space-4);
@@ -171,44 +199,39 @@
   font-weight: 500;
 }
 
-.demoCredentials {
+.couponBanner {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--amber-3);
+  border: 1px solid var(--amber-7);
+  border-radius: var(--radius-2);
+  color: var(--amber-12);
+  font-size: var(--font-size-1);
+}
+
+.couponList {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  margin-top: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-neutral-2);
-  border: 1px solid var(--color-neutral-4);
-  border-radius: var(--radius-2);
+  margin-top: var(--space-1);
 }
 
-.demoCredentialsValue {
-  color: var(--color-neutral-12);
+.couponItem {
+  color: var(--amber-12);
+}
+
+.couponCode {
+  background: var(--amber-9);
+  color: var(--amber-contrast);
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius-1);
   font-family: var(--font-family-mono, monospace);
-  font-size: var(--font-size-1);
-}
-
-.projectLinkRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-}
-
-.projectLink {
-  display: inline-block;
-  margin-top: var(--space-4);
-  color: var(--color-accent-9);
-  font-weight: 600;
-  font-size: var(--font-size-1);
-  text-decoration: none;
-}
-
-.projectLink:hover {
-  text-decoration: underline;
+  font-weight: 700;
+  letter-spacing: var(--font-letterspacing-1);
 }
 
 @media (max-width: 768px) {
-  .projectsGrid {
+  .productsGrid {
     grid-template-columns: 1fr;
   }
 }

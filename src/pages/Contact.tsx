@@ -2,8 +2,9 @@ import {useEffect, useState} from 'react';
 import {Navigation} from '../components/Navigation.tsx';
 import {Footer} from '../components/Footer.tsx';
 import {Button} from '../components/ui/button/button.tsx';
-import {Loader2, Mail} from 'lucide-react';
+import {Github, Linkedin, Loader2, Mail} from 'lucide-react';
 import {useToast} from '../hooks/use-toast.ts';
+import {useInView} from '../hooks/use-in-view.ts';
 import type {ContactFormData} from '../services/email.ts';
 import {sendContactEmail, validateContactForm} from '../services/email.ts';
 import styles from './contact.module.css';
@@ -22,6 +23,9 @@ export default function Contact() {
     useEffect(() => {
         document.title = 'Contact Us - M-Tech';
     }, []);
+
+    const hero = useInView(0.1);
+    const grid = useInView();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,63 +91,66 @@ export default function Contact() {
         <div className={styles.page}>
             <Navigation/>
 
-            <section className={styles.hero}>
+            <section ref={hero.ref} className={`${styles.hero} reveal ${hero.isInView ? 'is-visible' : ''}`}>
                 <h1 className={styles.heroTitle}>Contact Us</h1>
                 <p className={styles.heroDescription}>
-                    Have a project in mind? We'd love to hear from you. Get in touch and let's discuss how we can help
-                    bring your
-                    vision to life.
+                    Got an idea worth building? Tell us about it — we'll turn it into a working product, not just a
+                    proposal.
                 </p>
             </section>
 
             <div className={styles.content}>
-                <div className={styles.grid}>
+                <div ref={grid.ref} className={`${styles.grid} reveal-stagger ${grid.isInView ? 'is-visible' : ''}`}>
                     <div className={styles.formSection}>
                         <h2>Send us a Message</h2>
                         <form className={styles.form} onSubmit={handleSubmit}>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="name">Name</label>
-                                <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}
-                                       required/>
+                            <div className={styles.formRow}>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="name">Name <span className={styles.required}>*</span></label>
+                                    <input type="text" id="name" name="name" value={formData.name}
+                                           onChange={handleChange} required/>
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="email">Email <span className={styles.required}>*</span></label>
+                                    <input type="email" id="email" name="email" value={formData.email}
+                                           onChange={handleChange} required/>
+                                </div>
+                            </div>
+
+                            <div className={styles.formRow}>
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="subject">Subject <span className={styles.required}>*</span></label>
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className={styles.formGroup}>
+                                    <label htmlFor="company">Company <span className={styles.required}>*</span></label>
+                                    <input
+                                        type="text"
+                                        id="company"
+                                        name="company"
+                                        value={formData.company}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label htmlFor="email">Email</label>
-                                <input type="email" id="email" name="email" value={formData.email}
-                                       onChange={handleChange} required/>
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label htmlFor="subject">Subject</label>
-                                <input
-                                    type="text"
-                                    id="subject"
-                                    name="subject"
-                                    value={formData.subject}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label htmlFor="company">Company</label>
-                                <input
-                                    type="text"
-                                    id="company"
-                                    name="company"
-                                    value={formData.company}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label htmlFor="message">Message</label>
+                                <label htmlFor="message">Message <span className={styles.required}>*</span></label>
                                 <textarea id="message" name="message" value={formData.message} onChange={handleChange}
                                           required/>
                             </div>
 
-                            <Button type="submit" size="lg" disabled={isSubmitting}>
+                            <Button type="submit" size="lg" disabled={isSubmitting} className={styles.submitButton}>
                                 {isSubmitting ? (
                                     <>
                                         <Loader2 className={styles.spinner}/>
@@ -159,44 +166,47 @@ export default function Contact() {
                     <div className={styles.infoSection}>
                         <h2>Contact Information</h2>
 
-                        <div className={styles.infoCard}>
-                            <Mail className={styles.infoIcon}/>
+                        <a href="mailto:mtechltd2021@gmail.com" className={styles.infoCard}>
+                            <span className={styles.infoIconWrap}>
+                                <Mail className={styles.infoIcon}/>
+                            </span>
                             <div className={styles.infoContent}>
                                 <h3>Email</h3>
                                 <p>mtechltd2021@gmail.com</p>
-                                {/*<p>support@m-tech.com</p>*/}
                             </div>
-                        </div>
+                        </a>
 
-                        {/*<div className={styles.infoCard}>*/}
-                        {/*  <Phone className={styles.infoIcon} />*/}
-                        {/*  <div className={styles.infoContent}>*/}
-                        {/*    <h3>Phone</h3>*/}
-                        {/*    <p>+1 (555) 123-4567</p>*/}
-                        {/*    <p>Mon-Fri, 9:00 AM - 6:00 PM PST</p>*/}
-                        {/*  </div>*/}
-                        {/*</div>*/}
+                        <a
+                            href="https://github.com/m-tech-org"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.infoCard}
+                        >
+                            <span className={styles.infoIconWrap}>
+                                <Github className={styles.infoIcon}/>
+                            </span>
+                            <div className={styles.infoContent}>
+                                <h3>GitHub</h3>
+                                <p>github.com/m-tech-org</p>
+                            </div>
+                        </a>
 
-                        {/*<div className={styles.infoCard}>*/}
-                        {/*  <MapPin className={styles.infoIcon} />*/}
-                        {/*  <div className={styles.infoContent}>*/}
-                        {/*    <h3>Office</h3>*/}
-                        {/*    <p>123 Tech Street</p>*/}
-                        {/*    <p>San Francisco, CA 94105</p>*/}
-                        {/*  </div>*/}
-                        {/*</div>*/}
-
+                        <a
+                            href="https://www.linkedin.com/company/mtechltdbd/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.infoCard}
+                        >
+                            <span className={styles.infoIconWrap}>
+                                <Linkedin className={styles.infoIcon}/>
+                            </span>
+                            <div className={styles.infoContent}>
+                                <h3>LinkedIn</h3>
+                                <p>M-Tech Ltd</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
-
-
-                {/*Map*/}
-                {/*<div className={styles.mapSection}>*/}
-                {/*  <h2>Our Location</h2>*/}
-                {/*  <div className={styles.map}>*/}
-                {/*    <p>Map integration placeholder - San Francisco, CA</p>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
             </div>
 
             <Footer/>

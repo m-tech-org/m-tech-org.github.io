@@ -23,8 +23,12 @@ export default function Projects() {
 
       <div className={styles.content}>
         <div className={styles.projectsGrid}>
-          {projects.map((project) => (
-            <div key={project.id} className={styles.projectCard}>
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              className={styles.projectCard}
+              style={{ animationDelay: `${Math.min(index, 8) * 80}ms` }}
+            >
               <img src={project.image} alt={project.title} className={styles.projectImage} />
               <div className={styles.projectContent}>
                 <div className={styles.projectCategoryRow}>

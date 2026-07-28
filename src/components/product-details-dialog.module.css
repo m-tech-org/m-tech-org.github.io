@@ -1,0 +1,175 @@
+.content {
+  width: min(90vw, 900px);
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+  padding-right: var(--space-7);
+}
+
+.title {
+  font: var(--font-subheading);
+  font-size: var(--font-size-5);
+  color: var(--color-neutral-12);
+}
+
+.description {
+  color: var(--color-neutral-11);
+  font-size: var(--font-size-2);
+  line-height: var(--font-lineheight-3);
+}
+
+.carousel {
+  position: relative;
+}
+
+.slideItem {
+  aspect-ratio: 16 / 9;
+  background: var(--color-neutral-1);
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.slideVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.slideItemPdf {
+  height: 70vh;
+  background: var(--color-neutral-1);
+  border-radius: var(--radius-3);
+  overflow: hidden;
+}
+
+.pdfFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: auto;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.longDescription {
+  color: var(--color-neutral-11);
+  line-height: var(--font-lineheight-3);
+  margin: 0;
+}
+
+.outcome {
+  background: var(--color-success-2);
+  border-left: 3px solid var(--color-success-9);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-2);
+  color: var(--color-success-11);
+  font-size: var(--font-size-1);
+  font-weight: 500;
+}
+
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.techBadge {
+  background: var(--color-accent-3);
+  color: var(--color-accent-11);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-2);
+  font-size: var(--font-size-0);
+  font-weight: 500;
+}
+
+.installBlock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.installLabel {
+  color: var(--color-neutral-10);
+  font-size: var(--font-size-0);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--font-letterspacing-2);
+}
+
+.installCommand {
+  background: var(--color-neutral-3);
+  border: 1px solid var(--color-neutral-5);
+  border-radius: var(--radius-2);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-1);
+  color: var(--color-neutral-12);
+}
+
+.couponBanner {
+  padding: var(--space-3) var(--space-4);
+  background: var(--amber-3);
+  border: 1px solid var(--amber-7);
+  border-radius: var(--radius-2);
+  color: var(--amber-12);
+  font-size: var(--font-size-1);
+}
+
+.couponList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.couponItem {
+  color: var(--amber-12);
+}
+
+.couponCode {
+  background: var(--amber-9);
+  color: var(--amber-contrast);
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius-1);
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  letter-spacing: var(--font-letterspacing-1);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-neutral-4);
+}
+
+@media (max-width: 640px) {
+  .content {
+    width: 94vw;
+    padding: var(--space-4);
+  }
+}

@@ -31,7 +31,7 @@
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: var(--space-5) var(--space-6);
+  padding: var(--space-3) var(--space-6);
 }
 
 .logo {
@@ -59,7 +59,7 @@
 }
 
 .logoImage {
-  height: 36px;
+  height: 32px;
   width: auto;
   filter: drop-shadow(0 2px 4px var(--color-accent-7));
   transition: transform 0.3s var(--ease-out);
@@ -95,6 +95,9 @@
 }
 
 .link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   color: var(--color-neutral-11);
   text-decoration: none;
   font-weight: 500;
@@ -103,6 +106,14 @@
   border-radius: var(--radius-3);
   transition: all 0.3s var(--ease-out);
   position: relative;
+}
+
+.linkIcon {
+  display: none;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-accent-9);
 }
 
 .link::before {
@@ -157,7 +168,7 @@
 
   .links {
     position: fixed;
-    top: 80px;
+    top: 60px;
     right: -100%;
     flex-direction: column;
     background: light-dark(
@@ -178,13 +189,47 @@
       color-mix(in srgb, var(--color-neutral-7) 30%, transparent)
     );
     transition: right 0.3s var(--ease-out);
-    min-width: 200px;
+    min-width: 220px;
     margin: var(--space-4);
     align-items: stretch;
+    gap: var(--space-1);
   }
 
   .links.open {
     right: 0;
+  }
+
+  .links li {
+    border-bottom: 1px solid light-dark(
+      color-mix(in srgb, var(--color-neutral-6) 40%, transparent),
+      color-mix(in srgb, var(--color-neutral-7) 30%, transparent)
+    );
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  .links li:last-child {
+    border-bottom: none;
+  }
+
+  .links.open li {
+    animation: navItemIn 0.35s var(--ease-out) forwards;
+  }
+
+  .links.open li:nth-child(1) { animation-delay: 0.05s; }
+  .links.open li:nth-child(2) { animation-delay: 0.1s; }
+  .links.open li:nth-child(3) { animation-delay: 0.15s; }
+  .links.open li:nth-child(4) { animation-delay: 0.2s; }
+  .links.open li:nth-child(5) { animation-delay: 0.25s; }
+  .links.open li:nth-child(6) { animation-delay: 0.3s; }
+
+  .link {
+    padding: var(--space-3) var(--space-3);
+    font-size: var(--font-size-3);
+  }
+
+  .linkIcon {
+    display: block;
   }
 
   .overlay {
@@ -200,5 +245,12 @@
   .links.open ~ .overlay {
     opacity: 1;
     pointer-events: all;
+  }
+
+  @keyframes navItemIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }

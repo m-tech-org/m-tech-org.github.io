@@ -3,6 +3,7 @@ import { Navigation } from '../components/Navigation.tsx';
 import { Footer } from '../components/Footer.tsx';
 import { Code, Smartphone, Cloud, Brain, Shield, Lightbulb, Check } from 'lucide-react';
 import { services, serviceCategories } from '../data/services.ts';
+import { useInView } from '../hooks/use-in-view.ts';
 import styles from './services.module.css';
 
 const iconMap: Record<string, any> = {
@@ -24,11 +25,15 @@ export default function Services() {
   const filteredServices =
     activeCategory === 'All' ? services : services.filter((service) => service.category === activeCategory);
 
+  const hero = useInView(0.1);
+  const filters = useInView();
+  const grid = useInView();
+
   return (
     <div className={styles.page}>
       <Navigation />
 
-      <section className={styles.hero}>
+      <section ref={hero.ref} className={`${styles.hero} reveal ${hero.isInView ? 'is-visible' : ''}`}>
         <h1 className={styles.heroTitle}>Our Services</h1>
         <p className={styles.heroDescription}>
           Comprehensive technology solutions tailored to your business needs. From concept to deployment, we deliver
@@ -37,7 +42,10 @@ export default function Services() {
       </section>
 
       <div className={styles.content}>
-        <div className={styles.filters}>
+        <div
+          ref={filters.ref}
+          className={`${styles.filters} reveal-stagger ${filters.isInView ? 'is-visible' : ''}`}
+        >
           {serviceCategories.map((category) => (
             <button
               key={category}
@@ -49,7 +57,10 @@ export default function Services() {
           ))}
         </div>
 
-        <div className={styles.servicesGrid}>
+        <div
+          ref={grid.ref}
+          className={`${styles.servicesGrid} reveal-stagger ${grid.isInView ? 'is-visible' : ''}`}
+        >
           {filteredServices.map((service) => {
             const IconComponent = iconMap[service.icon] || Code;
             return (
