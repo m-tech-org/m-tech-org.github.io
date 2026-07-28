@@ -152,8 +152,17 @@ export function TechStackCanvas() {
     let destroyed = false;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Canvas can't use the site's CSS light-dark() — pick a legible label color for each scheme.
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const labelColorPrimary = prefersDark ? 'rgba(226, 232, 240, 0.95)' : 'rgba(15, 23, 42, 0.9)';
+    const labelColorSecondary = prefersDark ? 'rgba(203, 213, 225, 0.8)' : 'rgba(30, 41, 59, 0.75)';
     const nodeRadius = 32;
     const iconSize = Math.round(nodeRadius * 1.3);
+
+    let isActive = false; // hovered (desktop) or tapped (mobile): frozen, alphabetized, all labels shown
+    const alphabeticalOrder = techStack
+      .map((_, i) => i)
+      .sort((a, b) => techStack[a].name.toLowerCase().localeCompare(techStack[b].name.toLowerCase()));
 
     const resize = () => {
       width = container.clientWidth;
@@ -188,6 +197,23 @@ export function TechStackCanvas() {
     };
     placeNodes();
 
+    const computeGridPositions = (): { x: number; y: number }[] => {
+      const cols = Math.max(3, Math.floor(width / (nodeRadius * 3.2)));
+      const cellW = width / cols;
+      const rowH = nodeRadius * 3;
+      const topPad = nodeRadius * 2;
+      const positions: { x: number; y: number }[] = new Array(techStack.length);
+      alphabeticalOrder.forEach((origIndex, rank) => {
+        const col = rank % cols;
+        const row = Math.floor(rank / cols);
+        positions[origIndex] = {
+          x: cellW * col + cellW / 2,
+          y: Math.min(topPad + rowH * row, height - nodeRadius * 1.5),
+        };
+      });
+      return positions;
+    };
+
     const iconItems = techStack.filter((item) => item.path);
     Promise.all(iconItems.map((item) => iconToImage(item, iconSize * 2))).then((images) => {
       if (destroyed) return;
@@ -199,7 +225,7 @@ export function TechStackCanvas() {
         }
       }
       draw();
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && !isActive) {
         animationFrame = requestAnimationFrame(tick);
       }
     });
@@ -207,22 +233,24 @@ export function TechStackCanvas() {
     function draw() {
       ctx.clearRect(0, 0, width, height);
 
-      // Connecting lines between nearby nodes
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i];
-          const b = nodes[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxDist = nodeRadius * 5;
-          if (dist < maxDist) {
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.12 * (1 - dist / maxDist)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
+      // Connecting lines between nearby nodes — skipped in the frozen/sorted view for a clean grid
+      if (!isActive) {
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i];
+            const b = nodes[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = nodeRadius * 5;
+            if (dist < maxDist) {
+              ctx.strokeStyle = `rgba(139, 92, 246, ${0.12 * (1 - dist / maxDist)})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+            }
           }
         }
       }
@@ -249,11 +277,62 @@ export function TechStackCanvas() {
           drawCustomIcon(ctx, node.item.customIcon, node.x, node.y, s, node.item.color);
         }
 
-        if (isHovered) {
+        // In the default floating view, only the hovered node's name shows, above it.
+        // In the frozen/sorted view (hover or tap on the canvas), every name shows, below it.
+        if (isActive) {
+          ctx.font = '600 12px ui-sans-serif, system-ui, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = isHovered ? labelColorPrimary : labelColorSecondary;
+          ctx.fillText(node.item.name, node.x, node.y + r + 16);
+        } else if (isHovered) {
           ctx.font = '600 13px ui-sans-serif, system-ui, sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillStyle = 'rgba(226, 232, 240, 0.95)';
+          ctx.fillStyle = labelColorPrimary;
           ctx.fillText(node.item.name, node.x, node.y - r - 10);
+        }
+      }
+    }
+
+    function resolveCollisions() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const minDist = a.radius + b.radius;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist >= minDist) continue;
+
+          if (dist === 0) {
+            // Exact same position (rare edge case) — nudge apart along an arbitrary axis.
+            dist = 0.01;
+            a.x -= 0.5;
+            b.x += 0.5;
+          }
+
+          const nx = dx / dist;
+          const ny = dy / dist;
+
+          // Separate so the circles no longer overlap.
+          const overlap = (minDist - dist) / 2;
+          a.x -= nx * overlap;
+          a.y -= ny * overlap;
+          b.x += nx * overlap;
+          b.y += ny * overlap;
+
+          // Elastic collision between equal "masses": swap the velocity components
+          // along the collision normal, keep the tangential components untouched.
+          const avn = a.vx * nx + a.vy * ny;
+          const bvn = b.vx * nx + b.vy * ny;
+          const avtX = a.vx - avn * nx;
+          const avtY = a.vy - avn * ny;
+          const bvtX = b.vx - bvn * nx;
+          const bvtY = b.vy - bvn * ny;
+          a.vx = avtX + bvn * nx;
+          a.vy = avtY + bvn * ny;
+          b.vx = bvtX + avn * nx;
+          b.vy = bvtY + avn * ny;
         }
       }
     }
@@ -272,8 +351,60 @@ export function TechStackCanvas() {
           node.y = Math.max(node.radius, Math.min(height - node.radius, node.y));
         }
       }
+      resolveCollisions();
       draw();
-      animationFrame = requestAnimationFrame(tick);
+      if (!isActive) {
+        animationFrame = requestAnimationFrame(tick);
+      }
+    }
+
+    let gridTargets: { x: number; y: number }[] = [];
+
+    function settleTick() {
+      let allSettled = true;
+      nodes.forEach((node, i) => {
+        const target = gridTargets[i];
+        const dx = target.x - node.x;
+        const dy = target.y - node.y;
+        if (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) {
+          allSettled = false;
+          node.x += dx * 0.18;
+          node.y += dy * 0.18;
+        } else {
+          node.x = target.x;
+          node.y = target.y;
+        }
+      });
+      draw();
+      if (isActive && !allSettled) {
+        animationFrame = requestAnimationFrame(settleTick);
+      }
+    }
+
+    function activate() {
+      if (isActive) return;
+      isActive = true;
+      cancelAnimationFrame(animationFrame);
+      gridTargets = computeGridPositions();
+      if (prefersReducedMotion) {
+        nodes.forEach((node, i) => {
+          node.x = gridTargets[i].x;
+          node.y = gridTargets[i].y;
+        });
+        draw();
+      } else {
+        animationFrame = requestAnimationFrame(settleTick);
+      }
+    }
+
+    function deactivate() {
+      if (!isActive) return;
+      isActive = false;
+      cancelAnimationFrame(animationFrame);
+      draw();
+      if (!prefersReducedMotion) {
+        animationFrame = requestAnimationFrame(tick);
+      }
     }
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -295,21 +426,48 @@ export function TechStackCanvas() {
     const handleMouseLeave = () => {
       if (hovered) {
         hovered = null;
-        if (prefersReducedMotion) draw();
+      }
+      deactivate();
+    };
+
+    const handleMouseEnter = () => activate();
+
+    const handleTouchStart = (e: TouchEvent) => {
+      e.preventDefault();
+      if (isActive) {
+        deactivate();
+      } else {
+        activate();
       }
     };
 
     canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseenter', handleMouseEnter);
     canvas.addEventListener('mouseleave', handleMouseLeave);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
 
     const handleResize = () => {
       const previousImages = nodes.map((node) => node.img);
       resize();
-      placeNodes();
-      nodes.forEach((node, index) => {
-        node.img = previousImages[index];
-      });
-      draw();
+      if (!isActive) {
+        placeNodes();
+        nodes.forEach((node, index) => {
+          node.img = previousImages[index];
+        });
+        draw();
+        return;
+      }
+      gridTargets = computeGridPositions();
+      cancelAnimationFrame(animationFrame);
+      if (prefersReducedMotion) {
+        nodes.forEach((node, i) => {
+          node.x = gridTargets[i].x;
+          node.y = gridTargets[i].y;
+        });
+        draw();
+      } else {
+        animationFrame = requestAnimationFrame(settleTick);
+      }
     };
     window.addEventListener('resize', handleResize);
 
@@ -318,7 +476,9 @@ export function TechStackCanvas() {
       cancelAnimationFrame(animationFrame);
       window.removeEventListener('resize', handleResize);
       canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseenter', handleMouseEnter);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
+      canvas.removeEventListener('touchstart', handleTouchStart);
     };
   }, []);
 

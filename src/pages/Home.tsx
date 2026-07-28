@@ -88,8 +88,8 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>We Ship. We Don't Just Consult.</h2>
           <p className={styles.aboutText}>
             M-Tech is a small team that builds real software — client projects and our own products, side by side.
-            From Laravel backends to React frontends, from Docker deployments to database design, we handle the full
-            stack ourselves instead of handing pieces off. If it's in production, one of us built it.
+            We handle everything ourselves end to end instead of handing pieces off. If it's in production, one of
+            us built it.
           </p>
         </div>
       </section>
