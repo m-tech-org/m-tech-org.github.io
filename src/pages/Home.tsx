@@ -88,8 +88,8 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>We Ship. We Don't Just Consult.</h2>
           <p className={styles.aboutText}>
             M-Tech is a small team that builds real software — client projects and our own products, side by side.
-            We handle everything ourselves end to end instead of handing pieces off. If it's in production, one of
-            us built it.
+            We architect, engineer, and ship production-grade systems end to end: no handoffs, no guesswork, no
+            black boxes. If it's live, one of us built it — and stands behind it.
           </p>
         </div>
       </section>
