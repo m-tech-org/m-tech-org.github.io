@@ -1,6 +1,8 @@
 # Tech Stack
 
-React 19, TypeScript, npm, Node.js, CSS Modules, **React Router v7 only** (do not use any other versions), OpenProps, React Hook Form, Radix-UI, lucide-react, Recharts.
+React 19, TypeScript, npm, Node.js, CSS Modules, OpenProps, React Hook Form, Radix-UI, lucide-react, Recharts.
+
+Navigation is hash-based (see `App.tsx`'s `hashchange` listener) — there is no routing library. Do not add react-router or any other router; wire new pages into the `App.tsx` switch statement and `Navigation.tsx` instead.
 
 ## CSS Modules
 
@@ -9,10 +11,6 @@ React 19, TypeScript, npm, Node.js, CSS Modules, **React Router v7 only** (do no
 ## Lucide React Icons
 
 - Before importing an icon, verify it's a named export of `lucide-react`. If it isn't, fallback to the 'square' icon.
-
-## React Router
-
-Use React-Router v7 in a "framework" mode.
 
 ## Forbidden & Read-Only Files
 
@@ -25,7 +23,6 @@ Use React-Router v7 in a "framework" mode.
    - `.gitignore`
    - `package-lock.json`
    - `tsconfig.json`
-   - `react-router.config.ts`
    - `.github/`
 
 # Forbidden Technologies

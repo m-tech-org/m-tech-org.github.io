@@ -1,7 +1,7 @@
 /* Page Background with Animated Gradients */
 .page {
   min-height: 100vh;
-  padding-top: 80px;
+  padding-top: 60px;
   background: linear-gradient(
     135deg,
     var(--color-neutral-1) 0%,
@@ -73,6 +73,11 @@
   padding: var(--space-9) var(--space-5);
 }
 
+.heroCompact {
+  min-height: 70vh;
+  padding-top: var(--space-6);
+}
+
 .heroBackground {
   position: absolute;
   inset: 0;
@@ -115,6 +120,67 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.promoTicker {
+  width: calc(100% - (var(--space-5) * 2));
+  max-width: 720px;
+  margin: var(--space-5) auto 0;
+  overflow: hidden;
+  background: var(--amber-3);
+  border: 1px solid var(--amber-7);
+  border-radius: var(--radius-6);
+  padding: var(--space-3) 0;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease-out;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.promoTickerTrack {
+  display: flex;
+  width: max-content;
+  animation: promoTickerScroll 16s linear infinite;
+}
+
+.promoTicker:hover .promoTickerTrack {
+  animation-play-state: paused;
+}
+
+.promoTickerItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  padding: 0 var(--space-6);
+  color: var(--amber-12);
+  font-size: var(--font-size-1);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.promoTickerItem:hover {
+  text-decoration: underline;
+}
+
+@keyframes promoTickerScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.promoCode {
+  background: var(--amber-9);
+  color: var(--amber-contrast);
+  padding: 0.1em 0.6em;
+  border-radius: var(--radius-2);
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 700;
+  letter-spacing: var(--font-letterspacing-1);
 }
 
 .heroTitle {
@@ -374,6 +440,19 @@
   margin: 0;
 }
 
+/* Tech Stack Section */
+.techStack {
+  padding: var(--space-9) var(--space-5);
+  position: relative;
+  z-index: 1;
+}
+
+.techStackContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
 /* Projects Section */
 .projects {
   padding: var(--space-9) var(--space-5);
@@ -395,9 +474,22 @@
 
 .projectsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: var(--space-7);
   margin-top: var(--space-7);
+}
+
+/* Shop Section */
+.shop {
+  padding: var(--space-9) var(--space-5);
+  position: relative;
+  z-index: 1;
+}
+
+.shopContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .projectCard {
@@ -435,6 +527,57 @@
 
 .projectCard:hover .projectImage {
   transform: scale(1.1);
+}
+
+.shopImage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.projectCard:hover .shopImage {
+  transform: scale(1.1);
+}
+
+.shopPromo {
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: var(--amber-3);
+  border: 1px solid var(--amber-7);
+  border-radius: var(--radius-2);
+  color: var(--amber-12);
+  font-size: var(--font-size-1);
+}
+
+.clickableCard {
+  cursor: pointer;
+}
+
+.upcomingCard {
+  cursor: default;
+}
+
+.upcomingCard:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.upcomingCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.45);
+  pointer-events: none;
+}
+
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.upcomingBanner img {
+  filter: grayscale(1);
 }
 
 .projectContent {

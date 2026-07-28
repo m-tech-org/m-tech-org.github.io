@@ -23,8 +23,12 @@ export default function Projects() {
 
       <div className={styles.content}>
         <div className={styles.projectsGrid}>
-          {projects.map((project) => (
-            <div key={project.id} className={styles.projectCard}>
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              className={styles.projectCard}
+              style={{ animationDelay: `${Math.min(index, 8) * 80}ms` }}
+            >
               <img src={project.image} alt={project.title} className={styles.projectImage} />
               <div className={styles.projectContent}>
                 <div className={styles.projectCategoryRow}>
@@ -59,10 +63,37 @@ export default function Projects() {
                   <strong>Outcome:</strong> {project.outcome}
                 </div>
 
+                {project.demoUsername && project.demoPassword && (
+                  <div className={styles.demoCredentials}>
+                    <span className={styles.metaLabel}>Demo Login</span>
+                    <code className={styles.demoCredentialsValue}>
+                      {project.demoUsername} / {project.demoPassword}
+                    </code>
+                  </div>
+                )}
+
                 {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
-                    {project.link.includes('github.com') ? 'View on GitHub' : 'Visit Website'} →
-                  </a>
+                  <div className={styles.projectLinkRow}>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
+                      {project.link.includes('github.com')
+                        ? 'View on GitHub'
+                        : project.demoWebsiteLink
+                          ? 'Demo CMS'
+                          : project.demoUsername
+                            ? 'View Live Demo'
+                            : 'Visit Website'} →
+                    </a>
+                    {project.demoWebsiteLink && (
+                      <a
+                        href={project.demoWebsiteLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.projectLink}
+                      >
+                        Demo Website →
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

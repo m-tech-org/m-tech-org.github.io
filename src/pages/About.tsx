@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {Navigation} from '../components/Navigation.tsx';
 import {Footer} from '../components/Footer.tsx';
 import {Award, Shield, Target, TrendingUp, Users, Zap} from 'lucide-react';
+import {useInView} from '../hooks/use-in-view.ts';
 import styles from './about.module.css';
 
 export default function About() {
@@ -9,11 +10,19 @@ export default function About() {
         document.title = 'About Us - M-Tech';
     }, []);
 
+    const hero = useInView(0.1);
+    const story = useInView();
+    const values = useInView();
+    const why = useInView();
+
     return (
         <div className={styles.page}>
             <Navigation/>
 
-            <section className={styles.hero}>
+            <section
+                ref={hero.ref}
+                className={`${styles.hero} reveal ${hero.isInView ? 'is-visible' : ''}`}
+            >
                 <div className={styles.titleWrap}>
                     <h1 className={styles.heroTitle}>About M-Tech</h1>
                     <span className={styles.version} title={`Built ${__BUILD_DATE__}`}>
@@ -30,7 +39,10 @@ export default function About() {
 
             {/* Company Story */}
             <section className={styles.section}>
-                <div className={styles.container}>
+                <div
+                    ref={story.ref}
+                    className={`${styles.container} reveal ${story.isInView ? 'is-visible' : ''}`}
+                >
                     <h2 className={styles.sectionTitle}>Our Story</h2>
                     <div className={styles.story}>
                         <p>
@@ -63,32 +75,32 @@ export default function About() {
             <section className={styles.section}>
                 <div className={styles.container}>
                     <h2 className={styles.sectionTitle}>Our Core Values</h2>
-                    <div className={styles.valuesGrid}>
+                    <div
+                        ref={values.ref}
+                        className={`${styles.valuesGrid} reveal-stagger ${values.isInView ? 'is-visible' : ''}`}
+                    >
                         <div className={styles.valueCard}>
                             <Target className={styles.valueIcon}/>
-                            <h3 className={styles.valueTitle}>Innovation</h3>
+                            <h3 className={styles.valueTitle}>Ship, Don't Just Pitch</h3>
                             <p className={styles.valueDescription}>
-                                We constantly push boundaries, exploring new technologies and methodologies to deliver
-                                cutting-edge
-                                solutions.
+                                We'd rather put something live and learn from real usage than perfect a slide deck.
+                                Every idea gets tested against production, not just a meeting room.
                             </p>
                         </div>
                         <div className={styles.valueCard}>
                             <Users className={styles.valueIcon}/>
-                            <h3 className={styles.valueTitle}>Collaboration</h3>
+                            <h3 className={styles.valueTitle}>Plain-Language Collaboration</h3>
                             <p className={styles.valueDescription}>
-                                We believe in the power of partnership, working closely with clients to understand and
-                                achieve their
-                                goals.
+                                No jargon walls between you and your project. You talk directly to the people
+                                writing the code, and you always know where things stand.
                             </p>
                         </div>
                         <div className={styles.valueCard}>
                             <Zap className={styles.valueIcon}/>
-                            <h3 className={styles.valueTitle}>Excellence</h3>
+                            <h3 className={styles.valueTitle}>Own the Outcome</h3>
                             <p className={styles.valueDescription}>
-                                Quality is non-negotiable. We maintain the highest standards in every project, from code
-                                to customer
-                                service.
+                                We treat every deploy like it's our own product on the line — because often, it is.
+                                Bugs get fixed because we'd want them fixed, not because a ticket says so.
                             </p>
                         </div>
                     </div>
@@ -118,32 +130,36 @@ export default function About() {
             <section className={styles.section}>
                 <div className={styles.container}>
                     <h2 className={styles.sectionTitle}>Why Choose M-Tech</h2>
-                    <div className={styles.whyGrid}>
+                    <div
+                        ref={why.ref}
+                        className={`${styles.whyGrid} reveal-stagger ${why.isInView ? 'is-visible' : ''}`}
+                    >
                         <div className={styles.whyCard}>
                             <Award className={styles.whyIcon}/>
                             <div className={styles.whyContent}>
-                                <h3>Proven Track Record</h3>
+                                <h3>We Build What We Sell</h3>
                                 <p>
-                                    Over 200 successful projects delivered across diverse industries, with a 98% client
-                                    satisfaction rate.
+                                    From backup utilities to HR systems, we run our own products in production —
+                                    not just client work. That's proof our code holds up in the real world, not
+                                    just in a portfolio.
                                 </p>
                             </div>
                         </div>
                         <div className={styles.whyCard}>
                             <TrendingUp className={styles.whyIcon}/>
                             <div className={styles.whyContent}>
-                                <h3>Scalable Solutions</h3>
-                                <p>We build with the future in mind, ensuring our solutions grow seamlessly with your
-                                    business.</p>
+                                <h3>Full-Stack, Built to Scale</h3>
+                                <p>Web, mobile, cloud, and AI under one roof. We design solutions that grow with
+                                    your business instead of needing a rebuild every time you scale.</p>
                             </div>
                         </div>
                         <div className={styles.whyCard}>
                             <Shield className={styles.whyIcon}/>
                             <div className={styles.whyContent}>
-                                <h3>Security First</h3>
+                                <h3>No Vendor Lock-In</h3>
                                 <p>
-                                    Your data and systems are protected with industry-leading security practices and
-                                    compliance standards.
+                                    Self-hosted by design — your data stays yours. We bake in industry-standard
+                                    security practices from day one instead of bolting them on later.
                                 </p>
                             </div>
                         </div>

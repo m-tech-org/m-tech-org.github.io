@@ -1,6 +1,16 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home as HomeIcon, Wrench, Briefcase, Package, Info, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { navItems } from '../data/navigation.ts';
 import styles from './navigation.module.css';
+
+const iconMap: Record<string, any> = {
+  Home: HomeIcon,
+  Wrench,
+  Briefcase,
+  Package,
+  Info,
+  Mail,
+};
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +32,22 @@ export function Navigation() {
 
   const isActive = (hash: string) => currentHash === hash;
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMenu();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -40,51 +66,21 @@ export function Navigation() {
         </button>
 
         <ul className={`${styles.links} ${isOpen ? styles.open : ''}`}>
-          <li>
-            <a
-              href="#"
-              onClick={closeMenu}
-              className={isActive('#') ? `${styles.link} ${styles.active}` : styles.link}
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="#services"
-              onClick={closeMenu}
-              className={isActive('#services') ? `${styles.link} ${styles.active}` : styles.link}
-            >
-              Services
-            </a>
-          </li>
-          <li>
-            <a
-              href="#projects"
-              onClick={closeMenu}
-              className={isActive('#projects') ? `${styles.link} ${styles.active}` : styles.link}
-            >
-              Projects
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              onClick={closeMenu}
-              className={isActive('#about') ? `${styles.link} ${styles.active}` : styles.link}
-            >
-              About
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              onClick={closeMenu}
-              className={isActive('#contact') ? `${styles.link} ${styles.active}` : styles.link}
-            >
-              Contact
-            </a>
-          </li>
+          {navItems.map((item) => {
+            const IconComponent = iconMap[item.icon];
+            return (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  onClick={closeMenu}
+                  className={isActive(item.href) ? `${styles.link} ${styles.active}` : styles.link}
+                >
+                  <IconComponent className={styles.linkIcon} />
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       {isOpen && <div className={styles.overlay} onClick={closeMenu} />}

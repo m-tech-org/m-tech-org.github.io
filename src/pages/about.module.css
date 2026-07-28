@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .hero {
@@ -199,7 +199,7 @@
 
 .whyGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
   margin-top: var(--space-7);
 }

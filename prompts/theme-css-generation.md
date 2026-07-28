@@ -41,5 +41,5 @@
 
 ### Step-by-step
 
-1. **Choose a color scale** for each semantic group (neutral, accent, success, error) from `app/styles/tokens/colors.css`.
+1. **Choose a color scale** for each semantic group (neutral, accent, success, error) from `src/styles/tokens/colors.css`.
 2. **Update each semantic variable** in `theme.css` to reference the chosen scale tokens (`--<scale>-1..12`) and `--<scale>-contrast`.

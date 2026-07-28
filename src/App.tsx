@@ -6,6 +6,7 @@ import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import Services from './pages/Services.tsx';
 import Projects from './pages/Projects.tsx';
+import Products from './pages/Products.tsx';
 import Contact from './pages/Contact.tsx';
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         return <Services />;
       case 'projects':
         return <Projects />;
+      case 'products':
+        return <Products />;
       case 'contact':
         return <Contact />;
       case 'home':
