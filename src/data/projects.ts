@@ -75,9 +75,9 @@ export const projects: Project[] = [
     category: "Web Development",
     description: "A ledger/accounting admin tool tracking organizations, projects, and project costs for Aerotia International.",
     longDescription:
-      "A server-rendered Laravel 9 admin panel that replaces spreadsheet-based cost tracking with a central ledger per organization. Seeded with demo data (300 projects, 1,800 costs) for onboarding and testing, and integrates M-Tech's own laravel-gitstamp package so the deployed version is always visible without SSH access.",
+      "A server-rendered Laravel 12 admin panel that replaces spreadsheet-based cost tracking with a central ledger per organization. Seeded with demo data (300 projects, 1,800 costs) for onboarding and testing, and integrates M-Tech's own laravel-gitstamp package so the deployed version is always visible without SSH access.",
     image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
-    technologies: ["Laravel 9", "PHP 8.0", "MySQL", "Docker", "laravel-gitstamp"],
+    technologies: ["Laravel 12", "PHP 8.2", "MySQL", "Docker", "laravel-gitstamp"],
     client: "Aerotia International",
     year: "2024",
     outcome: "Central cost/project ledger per organization, replacing spreadsheets.",
