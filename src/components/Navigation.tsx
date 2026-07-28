@@ -18,7 +18,7 @@ export function Navigation() {
 
   useEffect(() => {
     const updateHash = () => {
-      setCurrentHash(window.location.pathname || '');
+      setCurrentHash(window.location.hash || '#');
     };
 
     updateHash();
