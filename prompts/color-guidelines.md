@@ -67,18 +67,19 @@ Typical usage:
 
 In dark mode, scales are automatically reversed (dark → light), the dominant color (step 9) remains consistent.
 
-Scales are defined in `app/styles/tokens/colors.css`. Example: `--indigo-7: light-dark(#abbdf9, #3a4f97)`. The `colors.css` file is large, do not read it directly, as it will pollute your context.
+Scales are defined in `src/styles/tokens/colors.css`. Example: `--indigo-7: light-dark(#abbdf9, #3a4f97)`. The `colors.css` file is large, do not read it directly, as it will pollute your context.
 
 Each scale also has an associated contrast color to ensure text readability on the dominant color (e.g., `--indigo-contrast` text on `--indigo-9` background).
 
 ## Semantic Colors
 
-The components typically use semantic variables (defined in `app/styles/theme.css`) that reference the raw color scales:
+The components typically use semantic variables (defined in `src/styles/theme.css`) that reference the raw color scales:
 
-- `--color-neutral-[1-12]` (one of the gray scales)
-- `--color-accent-[1-12]` (project's primary brand color)
-- `--color-success-[1-12]`
-- `--color-error-[1-12]`
+- `--color-neutral-[1-12]` (mauve — gray scale)
+- `--color-accent-[1-12]` (purple — project's primary brand color)
+- `--color-secondary-[1-12]` (cyan — complementary accent, used alongside accent in most brand gradients)
+- `--color-success-[1-12]` (green)
+- `--color-error-[1-12]` (red)
 
 You must update these semantic variables to match the intended mood and visual style of the project.
 

@@ -19,24 +19,29 @@ A modern, responsive company portfolio built with React, TypeScript, and Vite.
 ```
 src/
 ├── components/       # Reusable UI components
-│   ├── ui/          # UI library components (buttons, cards, etc.)
+│   ├── ui/          # shadcn-style UI library (buttons, dialog, carousel, etc.)
+│   ├── ai-chat/     # chatling widget wrapper (ChatWidgetMount)
 │   ├── Navigation.tsx
-│   └── Footer.tsx
+│   ├── Footer.tsx
+│   ├── ProductDetailsDialog.tsx
+│   └── TechStackCanvas.tsx
 ├── pages/           # Page components
 │   ├── Home.tsx
 │   ├── About.tsx
 │   ├── Services.tsx
 │   ├── Projects.tsx
+│   ├── Products.tsx
 │   └── Contact.tsx
-├── data/            # Typed content data (services, projects, team)
+├── data/            # Typed content data (services, projects, products, team, navigation, tech stack)
 ├── hooks/           # Custom React hooks
-├── services/        # Business logic (email, AI chat)
+├── config/          # Runtime config (AI chat, EmailJS)
+├── services/        # Business logic (email)
 ├── styles/          # Global styles and tokens
-├── App.tsx          # Main app component with routing
+├── App.tsx          # Main app component with hash-based routing
 └── main.tsx         # Entry point
 
 workers/
-└── ai-proxy/        # Cloudflare Worker proxying the AI chat widget (see its README)
+└── ai-proxy/        # Cloudflare Worker the chatling widget talks to for AI responses (see its README)
 ```
 
 ## Getting Started
@@ -79,6 +84,7 @@ The app uses hash-based routing:
 - `#about` - About us
 - `#services` - Services listing
 - `#projects` - Portfolio projects
+- `#products` - Products/Shop catalog
 - `#contact` - Contact form
 
 ## EmailJS Setup
@@ -121,11 +127,13 @@ build/
 - **TypeScript** - Type safety
 - **Vite** - Build tool
 - **CSS Modules** - Scoped styling
-- **Lucide React** - Icons
+- **Lucide React** / **React Icons** (Simple Icons) - Icons and brand logos
 - **Radix UI** - Accessible components
+- **Embla Carousel** - Product details media carousel
 - **EmailJS** - Email service
 - **React Hook Form** - Form management
 - **Sonner** - Toast notifications
+- **chatling** - AI chat widget, backed by the `workers/ai-proxy` Cloudflare Worker
 
 ## License
 

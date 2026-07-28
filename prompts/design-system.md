@@ -2,8 +2,8 @@
 
 ## Theme
 
-- Global theme file: `/app/styles/theme.css`
-- Prefer existing tokens from `/app/styles/tokens/`
+- Global theme file: `src/styles/theme.css`
+- Prefer existing tokens from `src/styles/tokens/`
 - If needed, extend by:
   - Adding new variables in `theme.css`
   - Defining component-level styles

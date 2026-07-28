@@ -1,5 +1,5 @@
-- \`app/routes\` - Site routes.
-- \`app/components\` - React components.
-- \`app/hooks\` - React component hooks.
-- \`app/styles\` - Site-wide CSS files.
-- \`app/data\` - Fixture data files.
+- `src/pages` - Top-level page components (`Home.tsx`, `About.tsx`, `Services.tsx`, `Projects.tsx`, `Products.tsx`, `Contact.tsx`), each with a co-located `*.module.css`.
+- `src/components` - Shared React components; `src/components/ui/` is the shadcn-style component library (one folder per component, built on Radix UI).
+- `src/hooks` - React component hooks.
+- `src/styles` - Site-wide CSS files (`global.css`, `theme.css`, `reset.css`) and `src/styles/tokens/` (colors, typography, spacing, animations, decorations).
+- `src/data` - Typed content data files (services, projects, products, navigation, tech stack).

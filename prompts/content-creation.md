@@ -1,4 +1,3 @@
-- When creating different site sections, create routes for them in the \`app/routes\` directory.
-- Change \`app/routes.ts\` AFTER all other changes.
-- Use kebab-case for file and folder names.
-- Google Fonts are specified in the \`links\` export in \`app/root.tsx\`. Avoid using \`@import\` in CSS files to import new ones.
+- When creating a new site section, add a page component in `src/pages/`, wire it into the `hashchange` switch in `App.tsx`, and add a nav entry in `src/data/navigation.ts` (shared by `Navigation.tsx` and the footer's Quick Links).
+- Use kebab-case for file and folder names (component `.module.css` files); page/component `.tsx` files use PascalCase to match their export.
+- Google Fonts are linked directly in `index.html` (`<link>` tags in `<head>`). Avoid using `@import` in CSS files to import new ones.
