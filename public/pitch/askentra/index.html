@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Askentra — Document Intelligence</title>
+<meta name="description" content="Askentra is a natural-language document search and Q&A system with grounded, cited answers — deployable cloud, on-prem, or fully offline.">
+<style>
+  :root {
+    --bg: #f6f4ee;
+    --surface: #ffffff;
+    --surface-2: #efebe1;
+    --ink: #1c1b1f;
+    --ink-soft: #55524a;
+    --ink-faint: #8b8778;
+    --border: #dad5c7;
+    --accent: #a5721f;
+    --accent-ink: #6e4c14;
+    --accent-soft: #f0ddb0;
+    --verify: #1f6f63;
+    --verify-soft: #d9ede8;
+    --shadow: 0 1px 2px rgba(28, 27, 31, 0.04), 0 8px 24px -12px rgba(28, 27, 31, 0.18);
+
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131319;
+      --surface: #1b1b24;
+      --surface-2: #21212c;
+      --ink: #ede9df;
+      --ink-soft: #a8a49a;
+      --ink-faint: #6b6860;
+      --border: #33323f;
+      --accent: #dda846;
+      --accent-ink: #f4d896;
+      --accent-soft: #3a2e17;
+      --verify: #4fb39f;
+      --verify-soft: #16342f;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #131319;
+    --surface: #1b1b24;
+    --surface-2: #21212c;
+    --ink: #ede9df;
+    --ink-soft: #a8a49a;
+    --ink-faint: #6b6860;
+    --border: #33323f;
+    --accent: #dda846;
+    --accent-ink: #f4d896;
+    --accent-soft: #3a2e17;
+    --verify: #4fb39f;
+    --verify-soft: #16342f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    padding: 88px 0 64px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero .eyebrow { display: block; margin-bottom: 22px; }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-ink);
+  }
+
+  .hero p.lede {
+    max-width: 60ch;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin: 22px 0 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 34px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-ghost {
+    border-color: var(--border);
+    color: var(--ink);
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  /* ---------- Demo mock ---------- */
+
+  .demo {
+    margin-top: 56px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .demo-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+  .demo-bar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+
+  .demo-body { padding: 26px 28px 30px; }
+
+  .demo-q {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .demo-q::before { content: "→ "; color: var(--accent); }
+
+  .demo-a {
+    margin-top: 16px;
+    font-size: 1.02rem;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.05em;
+    background: var(--accent);
+    vertical-align: -0.15em;
+    animation: blink 1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .citation {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 7px 12px;
+    background: var(--verify-soft);
+    color: var(--verify);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  .citation b { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Sections ---------- */
+
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+
+  .section-head { max-width: 62ch; margin-bottom: 40px; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+  .section-head p { color: var(--ink-soft); margin: 14px 0 0; font-size: 1.04rem; }
+
+  p.body-text { max-width: 68ch; color: var(--ink-soft); }
+
+  /* Differentiators */
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .diff-card {
+    background: var(--surface);
+    padding: 26px 24px;
+  }
+
+  .diff-card .tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.04rem;
+    margin: 10px 0 8px;
+  }
+
+  .diff-card p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+  }
+
+  /* Deployment triptych */
+
+  .deploy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+  }
+
+  .deploy-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 22px;
+    background: var(--surface);
+  }
+
+  .deploy-card .eyebrow { display: block; margin-bottom: 10px; }
+  .deploy-card h3 { font-family: var(--font-body); font-size: 1.08rem; font-weight: 700; margin-bottom: 8px; }
+  .deploy-card p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; }
+
+  /* Security stamp list */
+
+  .stamp {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    padding: 8px 0;
+  }
+
+  .stamp-row {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .stamp-row:last-child { border-bottom: none; }
+
+  .stamp-mark {
+    font-family: var(--font-mono);
+    color: var(--verify);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    width: 1.4em;
+  }
+
+  .stamp-row div h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.98rem;
+    margin: 0 0 4px;
+  }
+  .stamp-row div p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+
+  /* Use case table */
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; }
+
+  table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 560px; }
+
+  th, td { text-align: left; padding: 14px 20px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  th {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    background: var(--surface-2);
+  }
+
+  td:first-child { font-weight: 700; width: 190px; }
+  td.q { color: var(--ink-soft); font-style: italic; }
+
+  /* Pilot steps */
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+
+  .step .num {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+  }
+
+  .step h3 { font-family: var(--font-body); font-weight: 700; font-size: 1rem; margin: 0 0 6px; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: 0.93rem; max-width: 60ch; }
+
+  /* Closing */
+
+  .closing { padding: 72px 0 88px; text-align: left; }
+  .closing h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); max-width: 20ch; }
+  .closing p.body-text { margin-top: 16px; font-size: 1.05rem; }
+
+  footer {
+    padding: 28px 0 48px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Reveal on scroll */
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 560px) {
+    .hero { padding: 64px 0 48px; }
+    section { padding: 48px 0; }
+    td:first-child { width: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow">Askentra — Document Intelligence</span>
+    <h1>Ask your documents<br><em>instead of searching them.</em></h1>
+    <p class="lede">
+      Askentra turns a client's S3 bucket, shared drive, or internal API into a system employees can simply
+      question in plain English — and every answer arrives with the exact passage it came from, so nothing
+      is taken on faith.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#pilot">See how a pilot runs</a>
+      <a class="btn btn-ghost" href="#deploy">Deployment options</a>
+    </div>
+
+    <div class="demo reveal">
+      <div class="demo-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;&nbsp;askentra — query</div>
+      <div class="demo-body">
+        <div class="demo-q">What does our remote work policy say about equipment reimbursement?</div>
+        <div class="demo-a">
+          Employees working remotely may expense one monitor, a keyboard, and a chair up to $400 total per
+          calendar year; requests over that amount need manager approval before purchase.<span class="cursor" aria-hidden="true"></span>
+        </div>
+        <div class="citation">Source: policies/remote-work-2024.pdf · chunk 3 · <b>94%</b> match</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <span class="eyebrow">The Problem</span>
+      <h2>Knowledge that exists but can't be found isn't knowledge.</h2>
+    </div>
+    <p class="body-text reveal">
+      Contracts, runbooks, policy PDFs, and reports pile up in storage every team already pays for. Finding
+      anything means knowing the exact filename, or running a keyword search that matches strings and misses
+      meaning. The question gets asked in Slack instead — and answered from memory, inconsistently, by
+      whoever happens to be online. Askentra gives that question a system to go to instead.
+    </p>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <span class="eyebrow">What Makes It Different</span>
+      <h2>Six decisions that separate a demo from something a team can trust.</h2>
+    </div>
+    <div class="diff-grid reveal">
+      <div class="diff-card">
+        <span class="tag">Grounded</span>
+        <h3>No invented answers</h3>
+        <p>The model is instructed to answer only from retrieved passages and say so when the context is
+          partial — tuned against a real retrieval-quality benchmark, not just prompted and hoped for.</p>
+      </div>
+      <div class="diff-card">
+        <span class="tag">Auditable</span>
+        <h3>Every answer shows its work</h3>
+        <p>Each response ships with the source document, the exact excerpt, and a similarity score — a
+          reviewer can check the answer in seconds instead of trusting a black box.</p>
+      </div>
+      <div class="diff-card">
+        <span class="tag">Multi-source</span>
+        <h3>Bring the data as it already lives</h3>
+        <p>S3, a local filesystem, Google Drive, or a generic HTTP API — any number side by side, with every
+          citation showing which source it came from.</p>
+      </div>
+      <div class="diff-card">
+        <span class="tag">Portable</span>
+        <h3>Cloud, on-prem, or fully offline</h3>
+        <p>The same pipeline runs entirely on a client's own hardware with zero data leaving the building, or
+          points at managed cloud infrastructure with a config change — not a rewrite.</p>
+      </div>
+      <div class="diff-card">
+        <span class="tag">Self-service</span>
+        <h3>Configured from a browser</h3>
+        <p>Sources, models, and security settings are managed from an admin panel — no engineer needed to
+          SSH in and hand-edit a config file for routine changes.</p>
+      </div>
+      <div class="diff-card">
+        <span class="tag">Resilient</span>
+        <h3>Degrades, doesn't collapse</h3>
+        <p>Automatic retries and circuit-breaking around every external dependency mean a slow service
+          degrades gracefully instead of taking the whole system down.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="deploy">
+    <div class="section-head reveal">
+      <span class="eyebrow">Deployment</span>
+      <h2>The delivery model fits the client, not the other way around.</h2>
+      <p>Flexibility here is a product feature — the same system supports a same-day pilot and a
+        fully offline appliance with no source code handed over.</p>
+    </div>
+    <div class="deploy-grid reveal">
+      <div class="deploy-card">
+        <span class="eyebrow">Pilot</span>
+        <h3>Docker Compose</h3>
+        <p>The fastest path to a working proof of concept — one command stands up the full stack for a
+          real evaluation against real documents.</p>
+      </div>
+      <div class="deploy-card">
+        <span class="eyebrow">Production</span>
+        <h3>Kubernetes / OpenShift</h3>
+        <p>A Helm chart with autoscaling, health checks, and Prometheus/Grafana monitoring, for clients
+          running it on their own cluster at scale.</p>
+      </div>
+      <div class="deploy-card">
+        <span class="eyebrow">Offline appliance</span>
+        <h3>Single executable</h3>
+        <p>One native desktop app for Windows, macOS, or Linux — no Docker, no terminal, no infrastructure
+          team required to run it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <span class="eyebrow">Security &amp; Trust</span>
+      <h2>Built assuming document contents are sensitive by default.</h2>
+    </div>
+    <div class="stamp reveal">
+      <div class="stamp-row">
+        <span class="stamp-mark">✓</span>
+        <div><h3>Gated admin access</h3><p>A separate admin account is required before any configuration,
+          credential, or data-source setting can be viewed or changed. No open-by-default admin state.</p></div>
+      </div>
+      <div class="stamp-row">
+        <span class="stamp-mark">✓</span>
+        <div><h3>Write-only secrets</h3><p>API keys and credentials never round-trip to the browser once set.</p></div>
+      </div>
+      <div class="stamp-row">
+        <span class="stamp-mark">✓</span>
+        <div><h3>Key auth and rate limiting</h3><p>Opt-in API key authentication and per-key rate limits on
+          every data-touching endpoint.</p></div>
+      </div>
+      <div class="stamp-row">
+        <span class="stamp-mark">✓</span>
+        <div><h3>Locked-down CORS</h3><p>An explicit allow-list of origins, never a wildcard.</p></div>
+      </div>
+      <div class="stamp-row">
+        <span class="stamp-mark">✓</span>
+        <div><h3>Structured logs and metrics</h3><p>Audit-ready logging and Prometheus metrics available out
+          of the box for operational visibility.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <span class="eyebrow">Who It's For</span>
+      <h2>Teams where the answer already exists — somewhere in a document.</h2>
+    </div>
+    <div class="table-scroll reveal">
+      <table>
+        <thead>
+          <tr><th>Team</th><th>A question Askentra answers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Legal &amp; Compliance</td><td class="q">"Which contracts include a limitation-of-liability clause above $500K?"</td></tr>
+          <tr><td>Engineering</td><td class="q">"How do we handle database migrations in production?"</td></tr>
+          <tr><td>Finance &amp; Analysts</td><td class="q">"What was the gross margin trend across Q1–Q3 in the earnings reports?"</td></tr>
+          <tr><td>HR &amp; People Ops</td><td class="q">"What does our remote work policy say about equipment reimbursement?"</td></tr>
+          <tr><td>Research</td><td class="q">"What methods have been used to measure this across the paper corpus?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="pilot">
+    <div class="section-head reveal">
+      <span class="eyebrow">Getting Started</span>
+      <h2>What a pilot looks like.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <span class="num">01</span>
+        <div><h3>Point it at real documents</h3><p>A sample set from the client's actual S3 bucket, shared drive folder, or internal API — not a demo dataset.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <div><h3>Stand up the stack</h3><p>Running within the hour via Docker Compose, on the client's own infrastructure if required — no document leaves their environment.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <div><h3>Run real questions</h3><p>The client's own team evaluates answer quality and citations directly, against the documents they actually use.</p></div>
+      </div>
+      <div class="step">
+        <span class="num">04</span>
+        <div><h3>Choose the production path</h3><p>Kubernetes/OpenShift for scale, or a packaged offline executable — whichever fits the client's environment.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing reveal" style="border-bottom: none;">
+    <span class="eyebrow">Licensing</span>
+    <h2>Proprietary software, licensed for client use.</h2>
+    <p class="body-text">
+      Not open source. Available as a hosted deployment, an on-premises deployment, or a packaged executable
+      for fully offline delivery — the engagement determines the shape, not the other way around.
+    </p>
+  </section>
+
+  <footer>
+    <span>Askentra — proprietary, all rights reserved.</span>
+    <span>Prepared for prospective clients &amp; partners.</span>
+  </footer>
+</main>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>

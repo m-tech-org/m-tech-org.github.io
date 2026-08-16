@@ -111,6 +111,36 @@ export const products: Product[] = [
     installCommand: "composer require m-tech-org/laravel-gitstamp",
   },
   {
+    id: "askentra",
+    title: "Askentra",
+    category: "AI / Document Search",
+    description:
+      "Natural-language search over your documents — S3, local filesystem, Google Drive, or a generic HTTP API — with AI-generated, cited answers.",
+    longDescription:
+      "A retrieval-augmented Q&A system: ask a plain-English question and get an answer synthesized from the actual retrieved passages, with the source document, excerpt, and similarity score attached to every response — not a black box. Deployable via Docker Compose for a pilot, a Helm chart for Kubernetes/OpenShift at scale, or as a single offline desktop executable with no source handed over. Runs fully on-prem/offline with zero data leaving the client's infrastructure, or against managed cloud infrastructure with a config change.",
+    image: "/images/products/askentra-card.svg",
+    screenshots: [
+      "/images/products/askentra-banner.png",
+      "/images/products/askentra-architecture.png",
+    ],
+    technologies: [
+      "FastAPI",
+      "React",
+      "OpenSearch",
+      "Ollama",
+      "Redis",
+      "Docker",
+      "Kubernetes",
+      "Helm",
+    ],
+    price: "Licensed per engagement",
+    year: "2026",
+    outcome:
+      "Turns a document pile into something a team can just ask — every answer auditable back to its source.",
+    link: "/pitch/askentra/index.html",
+    ctaLabel: "View Pitch",
+  },
+  {
     id: "vaultagrambot",
     title: "VaultAGramBot",
     category: "Telegram Bot",
