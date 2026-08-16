@@ -156,17 +156,38 @@ export function TechStackCanvas() {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const labelColorPrimary = prefersDark ? 'rgba(226, 232, 240, 0.95)' : 'rgba(15, 23, 42, 0.9)';
     const labelColorSecondary = prefersDark ? 'rgba(203, 213, 225, 0.8)' : 'rgba(30, 41, 59, 0.75)';
-    const nodeRadius = 32;
-    const iconSize = Math.round(nodeRadius * 1.3);
+    // Smaller nodes on narrow viewports so more columns fit per row — otherwise the fixed
+    // number of rows a 32px node needs at mobile widths overflows the container height and
+    // rows get clamped/stacked on top of each other (see computeRequiredHeight below).
+    let nodeRadius = 32;
+    let iconSize = Math.round(nodeRadius * 1.3);
 
     let isActive = false; // hovered (desktop) or tapped (mobile): frozen, alphabetized, all labels shown
     const alphabeticalOrder = techStack
       .map((_, i) => i)
       .sort((a, b) => techStack[a].name.toLowerCase().localeCompare(techStack[b].name.toLowerCase()));
 
+    const computeCols = (w: number, radius: number) => Math.max(3, Math.floor(w / (radius * 3.2)));
+
+    // Height actually needed to lay out every item without overlap, given how many
+    // columns fit at this width/radius. Used as a floor under the CSS-defined height so
+    // we only ever grow the container, never rely on clamping nodes into too little space.
+    const computeRequiredHeight = (w: number, radius: number) => {
+      const cols = computeCols(w, radius);
+      const rows = Math.ceil(techStack.length / cols);
+      const rowH = radius * 3;
+      const topPad = radius * 2.2;
+      const bottomPad = radius * 1.5;
+      return Math.round(topPad + rowH * Math.max(rows - 1, 0) + bottomPad);
+    };
+
     const resize = () => {
       width = container.clientWidth;
-      height = container.clientHeight;
+      nodeRadius = width < 640 ? 20 : 32;
+      iconSize = Math.round(nodeRadius * 1.3);
+      const cssHeight = width < 640 ? 320 : 420; // mirrors tech-stack-canvas.module.css
+      height = Math.max(cssHeight, computeRequiredHeight(width, nodeRadius));
+      container.style.height = `${height}px`;
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
@@ -176,7 +197,7 @@ export function TechStackCanvas() {
     resize();
 
     const placeNodes = () => {
-      const cols = Math.max(3, Math.floor(width / (nodeRadius * 3.2)));
+      const cols = computeCols(width, nodeRadius);
       nodes = techStack.map((item, index) => {
         const col = index % cols;
         const row = Math.floor(index / cols);
@@ -198,7 +219,7 @@ export function TechStackCanvas() {
     placeNodes();
 
     const computeGridPositions = (): { x: number; y: number }[] => {
-      const cols = Math.max(3, Math.floor(width / (nodeRadius * 3.2)));
+      const cols = computeCols(width, nodeRadius);
       const cellW = width / cols;
       const rowH = nodeRadius * 3;
       const topPad = nodeRadius * 2;
@@ -457,6 +478,9 @@ export function TechStackCanvas() {
         draw();
         return;
       }
+      nodes.forEach((node) => {
+        node.radius = nodeRadius;
+      });
       gridTargets = computeGridPositions();
       cancelAnimationFrame(animationFrame);
       if (prefersReducedMotion) {
